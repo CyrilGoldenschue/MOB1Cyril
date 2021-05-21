@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {ImageBackground, StyleSheet, Text, TextInput, View } from 'react-native';
-import Picker from "./Picker"
+import {ImageBackground, StyleSheet, Text, TextInput, View, Button, Alert  } from 'react-native';
+import Picker from "../components/Picker"
 
 class LoginScreen extends Component {
 
@@ -14,9 +14,17 @@ class LoginScreen extends Component {
             <Text style={styles.text}>Initiales</Text>
             <TextInput style={styles.input}></TextInput>
             <Text style={styles.text}>Mot de passe</Text>
-            <TextInput style={styles.input}></TextInput>
+            <TextInput style={styles.input} secureTextEntry></TextInput>
             <Text style={styles.text}>Base</Text>
             <Picker></Picker>
+            <View style={[{ width: "50%" , marginLeft: "25%" }]}>
+              <Button
+                size={15}
+                color="blue"
+                onPress={() => Alert.alert('Simple Button pressed')}
+                title="Se Log"
+              />
+            </View>
 
         </ImageBackground>
       </View>
@@ -52,6 +60,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 50,
   },
+  
   });
 
 
