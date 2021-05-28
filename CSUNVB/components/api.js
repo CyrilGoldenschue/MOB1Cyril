@@ -1,25 +1,15 @@
-import React from 'react';
-
 import axios from 'axios';
 
-export default class BaseList extends React.Component {
-  state = {
-    Base: []
-  }
+let APIKit = axios.create({
+  baseURL: 'http://127.0.0.1:8000',
+  timeout: 10000,
+});
 
-  componentDidMount() {
-    axios.get(`http://127.0.0.1:8000/api/bases`)
-      .then(res => {
-        const bases = res.data;
-        this.setState({ bases });
-      })
-  }
+export const setClientToken = token => {
+  APIKit.interceptors.request.use(function(config){
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  });
+};
 
-  render() {
-    return (
-      <ul>
-        { this.state.bases.map(base => <li>{base.name}</li>)}
-      </ul>
-    )
-  }
-}
+export default APIKit;
