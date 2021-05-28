@@ -1,10 +1,41 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import {ImageBackground, StyleSheet, Text, TextInput, View, Button, Alert  } from 'react-native';
 import Picker from "../components/Picker"
+import APIKit, {setClientToken} from "../components/api"
+import { createStackNavigator } from '@react-navigation/native';
 
 class LoginScreen extends Component {
+  constructor(props){
+    super(props),
+    this.state = {initials: "", password: ""}
+  }
 
-  
+  onInitialsChange = initials => {
+    this.setState({initials: initials});
+  };
+
+  onPasswordChange = password => {
+    this.setState({password: password});
+  };
+
+  onPressLogin() {
+    const {initials, password} = this.state;
+    const payload = {initials, password};
+    console.log(payload);
+
+    const onSuccess = ({data}) => {
+      this.setState({userToken: data.token});
+    };
+
+    const onFailure = error => {
+      console.log(error && error.response);
+    };
+
+    APIKit.post('/api/gettoken', payload)
+      .then(onSuccess)
+      .catch(onFailure);
+  }
 
   render() {
     return (
@@ -12,20 +43,26 @@ class LoginScreen extends Component {
         <ImageBackground source={image} style={styles.image}>
           
             <Text style={styles.text}>Initiales</Text>
-            <TextInput style={styles.input}></TextInput>
+            <TextInput 
+            style={styles.input}
+            onChangeText={this.onInitialsChange}
+            ></TextInput>
             <Text style={styles.text}>Mot de passe</Text>
-            <TextInput style={styles.input} secureTextEntry></TextInput>
+            <TextInput 
+            style={styles.input} 
+            secureTextEntry
+            onChangeText={this.onPasswordChange}
+            ></TextInput>
             <Text style={styles.text}>Base</Text>
             <Picker></Picker>
             <View style={[{ width: "50%" , marginLeft: "25%" }]}>
               <Button
                 size={15}
                 color="blue"
-                onPress={() => Alert.alert('Simple Button pressed')}
+                onPress={this.onPressLogin.bind(this)}
                 title="Se Log"
               />
             </View>
-
         </ImageBackground>
       </View>
     );
@@ -60,6 +97,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 50,
   },
+  headerStyle: {
+  	elevation: 0, // remove shadow on Android
+  	shadowOpacity: 0, // remove shadow on iOS
+    borderBottomWidth: 0 // Just in case.
+}
   
   });
 
