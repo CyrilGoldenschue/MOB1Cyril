@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import {ImageBackground, StyleSheet, Text, TextInput, View, Button, Alert  } from 'react-native';
-import Picker from "../components/Picker"
-import APIKit, {setClientToken} from "../components/api"
-import { createStackNavigator } from '@react-navigation/native';
+import Picker from "../../components/Picker"
+import APIKit from "../../components/api"
+import AsyncStorage from '@react-native-community/async-storage'
+
+
 
 class LoginScreen extends Component {
   constructor(props){
@@ -26,6 +28,8 @@ class LoginScreen extends Component {
 
     const onSuccess = ({data}) => {
       this.setState({userToken: data.token});
+      AsyncStorage.setItem('user_token', this.state.userToken);
+      this.props.navigation.push('Home')
     };
 
     const onFailure = error => {
