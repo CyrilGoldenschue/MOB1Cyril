@@ -1,13 +1,9 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
-import axios from 'axios';
 import {Picker} from '@react-native-picker/picker';
 import APIKit from "../components/api"
 
 class PickerView extends Component {
-
-    
-
     constructor(props){
         super(props)
         this.state = {bases: []}
