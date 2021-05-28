@@ -11,7 +11,7 @@ class PickerView extends Component {
 
     getBasesData() {
         
-        APIKit.get('/api/bases', {})
+        APIKit.get('bases', {})
             .then(res => {
                 const data = res.data
                 const bases = data.map(u =>

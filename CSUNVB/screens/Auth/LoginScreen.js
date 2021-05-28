@@ -36,7 +36,7 @@ class LoginScreen extends Component {
       console.log(error && error.response);
     };
 
-    APIKit.post('/api/gettoken', payload)
+    APIKit.post('gettoken', payload)
       .then(onSuccess)
       .catch(onFailure);
   }
