@@ -8,13 +8,15 @@ import {token} from "../components/api";
 
 const Stack = createStackNavigator();
 
-export default class Navigation extends Component {
+class Navigation extends Component {
     state = {
         userToken: undefined
     };
     
     constructor(props){
         super(props)
+
+        this.handleTokenUpdate = this.handleTokenUpdate.bind(this)
     }
 
     handleTokenUpdate(data){
@@ -22,12 +24,10 @@ export default class Navigation extends Component {
         this.setState({userToken: data})
     }
     
-    //TO DO: faire un rechargement de la page a chaque changement de screen
+   //TODO changer le nom du props
 
     render(){
-        
         return( 
-            
             <Stack.Navigator>
                 {
                     this.state.userToken == null ? (
@@ -39,18 +39,19 @@ export default class Navigation extends Component {
                         </>
                     ) : (
                         <>
-                            <Stack.Screen name="Home" component={HomeScreen} options={{
+                            <Stack.Screen name="Home"  options={{
                                 headerShown:true
-                            }} />  
+                            }} >  
+                                {props => <HomeScreen {...props} miaou={this.handleTokenUpdate} />}
+                            </Stack.Screen>
                         </>
                     )
                 }
-
             </Stack.Navigator>
         )
-        
     }
-    
 }
+
+export default Navigation
 
     
