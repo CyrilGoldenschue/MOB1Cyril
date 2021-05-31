@@ -1,35 +1,52 @@
-import {createStackNavigator } from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
 import React, { Component } from 'react';
 
 import HomeScreen from '../screens/Common/HomeScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
 
-const Stack = createStackNavigator();
-const AuthStack = createStackNavigator();
-const AppStack = createStackNavigator();
+import {token} from "../components/api";
 
-// Implementation of HomeScreen, OtherScreen, SignInScreen, AuthLoadingScreen
-// goes here.
+const Stack = createStackNavigator();
+
 export default class Navigation extends Component {
+    state = {
+        userToken: undefined
+    };
+    
     constructor(props){
-        super(props),
-        this.state = {userToken: null}      
+        super(props)
     }
 
-    render(){
+    handleTokenUpdate(data){
+        console.log('JE SUIS PAS FOU ?', data)
+        this.setState({userToken: data})
+    }
+    
+    //TO DO: faire un rechargement de la page a chaque changement de screen
 
+    render(){
+        
         return( 
-            <NavigationContainer>
-                <AuthStack.Navigator  
-                initialRouteName="Login" 
-                screenOptions={{
-                    headerShown: false
-                }}>
-                    <Stack.Screen name="Login" component={LoginScreen}  />     
-                    <Stack.Screen name="Home" component={HomeScreen}  />      
-                </AuthStack.Navigator>
-            </NavigationContainer>
+            
+            <Stack.Navigator>
+                {
+                    this.state.userToken == null ? (
+                        <>
+                            <Stack.Screen name="Login" options={
+                            {headerShown: false}}>
+                                {props => <LoginScreen {...props} miaou={this.handleTokenUpdate} />}
+                                </Stack.Screen> 
+                        </>
+                    ) : (
+                        <>
+                            <Stack.Screen name="Home" component={HomeScreen} options={{
+                                headerShown:true
+                            }} />  
+                        </>
+                    )
+                }
+
+            </Stack.Navigator>
         )
         
     }
