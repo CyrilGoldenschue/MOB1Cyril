@@ -6,3 +6,4 @@ let APIKit = axios.create({
 });
 
 export default APIKit;
+export const token = localStorage.getItem('user_token')
