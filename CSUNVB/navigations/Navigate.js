@@ -2,6 +2,8 @@ import {createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
 import React, { Component } from 'react';
 
 import HomeScreen from '../screens/Common/HomeScreen';
+import ReportScreen from '../screens/Common/ReportScreen';
+import ConsultScreen from '../screens/Common/ConsultScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
 
 import {token} from "../components/api";
@@ -15,7 +17,7 @@ class Navigation extends Component {
     
     constructor(props){
         super(props)
-
+        this.state =({userToken: localStorage.getItem('user_token')})
         this.handleTokenUpdate = this.handleTokenUpdate.bind(this)
     }
 
@@ -23,8 +25,6 @@ class Navigation extends Component {
         console.log('JE SUIS PAS FOU ?', data)
         this.setState({userToken: data})
     }
-    
-   //TODO changer le nom du props
 
     render(){
         return( 
@@ -34,7 +34,7 @@ class Navigation extends Component {
                         <>
                             <Stack.Screen name="Login" options={
                             {headerShown: false}}>
-                                {props => <LoginScreen {...props} miaou={this.handleTokenUpdate} />}
+                                {props => <LoginScreen {...props} auth={this.handleTokenUpdate} />}
                                 </Stack.Screen> 
                         </>
                     ) : (
@@ -42,7 +42,17 @@ class Navigation extends Component {
                             <Stack.Screen name="Home"  options={{
                                 headerShown:true
                             }} >  
-                                {props => <HomeScreen {...props} miaou={this.handleTokenUpdate} />}
+                                {props => <HomeScreen {...props} auth={this.handleTokenUpdate}  />}
+                            </Stack.Screen>
+                            <Stack.Screen name="Report"  options={{
+                                headerShown:true
+                            }} >  
+                                {props => <ReportScreen {...props}  />}
+                            </Stack.Screen>
+                            <Stack.Screen name="Consult"  options={{
+                                headerShown:true
+                            }} >  
+                                {props => <ConsultScreen {...props}  />}
                             </Stack.Screen>
                         </>
                     )
