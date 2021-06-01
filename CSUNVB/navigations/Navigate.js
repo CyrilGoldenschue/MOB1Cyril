@@ -40,17 +40,17 @@ class Navigation extends Component {
                     ) : (
                         <>
                             <Stack.Screen name="Home"  options={{
-                                headerShown:true
+                                headerShown:false
                             }} >  
                                 {props => <HomeScreen {...props} auth={this.handleTokenUpdate}  />}
                             </Stack.Screen>
                             <Stack.Screen name="Report"  options={{
-                                headerShown:true
+                                headerShown:false
                             }} >  
                                 {props => <ReportScreen {...props}  />}
                             </Stack.Screen>
                             <Stack.Screen name="Consult"  options={{
-                                headerShown:true
+                                headerShown:false
                             }} >  
                                 {props => <ConsultScreen {...props}  />}
                             </Stack.Screen>
