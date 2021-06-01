@@ -26,7 +26,7 @@ class LoginScreen extends Component {
     const onSuccess = ({data}) => {
       this.setState({userToken: data.token});
       localStorage.setItem('user_token', this.state.userToken);
-      this.props.miaou(data.token)
+      this.props.auth(data.token)
     };
 
     const onFailure = error => {
