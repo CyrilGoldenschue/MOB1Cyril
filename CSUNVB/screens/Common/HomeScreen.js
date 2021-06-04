@@ -5,9 +5,55 @@ import APIKit from "../../components/api"
 
 export default class Homescreen extends Component {
   constructor(props){
-    super(props)
+    super(props),
+    this.state = {base: "", initials: ""}
   }
   
+  getBasesData() {
+        
+    APIKit.get('bases', {})
+        .then(res => {
+            const dataBase = res.data
+            this.base = dataBase.map(u =>
+              {
+                if(u.id == localStorage.getItem("base")){
+                  this.setState({
+                    base: u.name
+                  })
+                  localStorage.setItem("baseName", u.name)
+                }
+              }
+            )
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+  }
+
+  getUserData() {
+        let config = {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("user_token")
+          }
+        }
+    APIKit.get('user', config)
+        .then(res => {
+            const dataUser = res.data
+            this.setState({
+              initials: dataUser.initials
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+  }
+
+  componentDidMount(){
+    
+    this.getUserData()
+    this.getBasesData()
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -18,6 +64,7 @@ export default class Homescreen extends Component {
               activeOpacity={0.95} 
               style={styles.buttonMenu} 
               onPress={() => {
+                //TODO remettre le setItem au début de l'ajout de la page de consultation
                 //localStorage.setItem('nav', "Consult");
                 this.props.navigation.navigate("Consult")
               }}>
@@ -45,10 +92,11 @@ export default class Homescreen extends Component {
               onPress={() => {
                 localStorage.removeItem('user_token');
                 localStorage.removeItem('nav');
+                localStorage.removeItem('base');
                 let userToken = localStorage.getItem('user_token')
                 this.props.auth(userToken)
               }}>
-                <Text style={styles.textLogout}>Se déconnecter</Text>
+                <Text style={styles.textLogout}>Se déconnecter   {this.state.initials}@{this.state.base}</Text>
             </TouchableOpacity>
           </View>
           </ImageBackground>
