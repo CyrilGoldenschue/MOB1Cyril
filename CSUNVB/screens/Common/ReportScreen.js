@@ -12,7 +12,6 @@ export default class Reportscreen extends Component {
     console.log(textBack)
     return (
       <View style={styles.container}>
-        <ImageBackground source={image} style={styles.image}>
           <View style={styles.header}>
             <TouchableOpacity 
               activeOpacity={0.95} 
@@ -26,19 +25,33 @@ export default class Reportscreen extends Component {
             <Text style={styles.title}>Rapports</Text>
           </View>
           <View style={styles.page}>
-            <View style={[{ width: "50%" , marginLeft: "25%" }]}>
-                <Button
-                  size={15}
-                  color="blue"
+            <Text style={styles.text}>Faire un</Text>
+            <View style={styles.div}>
+              <TouchableOpacity 
+                  activeOpacity={0.95} 
+                  style={styles.buttonCheck} 
                   onPress={() => {
-                    this.props.navigation.pop(1)
-                  }}
-                  title="Rapport"
-                />
-            </View>
+                    localStorage.setItem('nav', "Home");
+                    this.props.navigation.navigate("Home")
+                  }}>
+                    <Text style={styles.text}>Pharmacheck</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                  activeOpacity={0.95} 
+                  style={styles.buttonCheck} 
+                  onPress={() => {
+                    localStorage.setItem('nav', "Home");
+                    this.props.navigation.navigate("Home")
+                  }}>
+                    <Text style={styles.text}>NovaCheck</Text>
+                </TouchableOpacity>
+              </View>
+            <Text style={styles.text}>à {localStorage.getItem("baseName")}</Text>
+
+
+
           </View>
           
-          </ImageBackground>
       </View>
     )
   }
@@ -59,10 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     
   },
-  text: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
+  
   header: {
     flex: .3,
     flexDirection: 'row',
@@ -71,6 +81,13 @@ const styles = StyleSheet.create({
     flex: 3,
     marginTop: 20
   },
+  div: {
+    flexDirection: 'row',
+    justifyContent: "center"
+  },
+
+
+
   buttonGoBack: {
     width: 50, 
     height: 50, 
@@ -81,6 +98,19 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     elevation:3,
   },
+  buttonCheck:{
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: 'rgb(33, 150, 243)',
+    width: 200, 
+    height: 30,
+  },
+
+
+  text: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   textBack: {
     fontSize: 50,
     color: "white",
@@ -88,7 +118,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 50,
     marginLeft: "15%",
-    color: "white",
     fontWeight: "bold"
   }
   
