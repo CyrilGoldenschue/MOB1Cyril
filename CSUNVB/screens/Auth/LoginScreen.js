@@ -1,18 +1,24 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import {ImageBackground, StyleSheet, Text, TextInput, View, Button, Alert  } from 'react-native';
-import Picker from "../../components/Picker"
+import {Picker} from '@react-native-picker/picker';
+
+import PickerView from "../../components/Picker"
 import APIKit from "../../components/api"
 
 class LoginScreen extends Component {
   constructor(props){
     super(props),
-    this.state = {initials: "", password: ""}
+    this.state = {initials: "", password: "", base: ""}
   }
+
+  //TODO envoyer la base aussi
 
   onInitialsChange = initials => {
     this.setState({initials: initials});
+    
   };
+
 
   onPasswordChange = password => {
     this.setState({password: password});
@@ -25,6 +31,7 @@ class LoginScreen extends Component {
     const onSuccess = ({data}) => {
       this.setState({userToken: data.token});
       localStorage.setItem('user_token', this.state.userToken);
+      localStorage.setItem('base', this.state.base )
       this.props.auth(data.token)
     };
 
@@ -54,7 +61,12 @@ class LoginScreen extends Component {
             onChangeText={this.onPasswordChange}
             ></TextInput>
             <Text style={styles.text}>Base</Text>
-            <Picker></Picker>
+            <Picker style={styles.picker}
+              onValueChange={(value) => this.setState({base: value})}
+            >
+              <Picker.Item label="--- Choissez ---" value="0"  key={ Math.random().toString(36).substr(2, 9) } ></Picker.Item>
+              <PickerView />
+            </Picker>
             <View style={[{ width: "50%" , marginLeft: "25%" }]}>
               <Button
                 size={15}
@@ -97,11 +109,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 50,
   },
-  headerStyle: {
-  	elevation: 0, // remove shadow on Android
-  	shadowOpacity: 0, // remove shadow on iOS
-    borderBottomWidth: 0 // Just in case.
-}
+  picker: {
+    marginLeft: 50,
+    marginRight: 50,
+    marginBottom: 20,
+    height: 50,
+  }
   
   });
 
