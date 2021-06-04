@@ -15,7 +15,7 @@ class PickerView extends Component {
             .then(res => {
                 const data = res.data
                 const bases = data.map(u =>
-                    <Picker.Item label={u.name} value={u.id}  key={ Math.random().toString(36).substr(2, 9) } />
+                    <Picker.Item label={u.name} value={u.id}  key={ u.id } />
                     )
 
                     this.setState({

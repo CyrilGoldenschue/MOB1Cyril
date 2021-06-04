@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Button, View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
+import ReportView from "../../components/check"
 
 let textBack = "<"
 
@@ -9,7 +11,6 @@ export default class Reportscreen extends Component {
   }
   
   render() {
-    console.log(textBack)
     return (
       <View style={styles.container}>
           <View style={styles.header}>
@@ -46,6 +47,7 @@ export default class Reportscreen extends Component {
                     <Text style={styles.text}>NovaCheck</Text>
                 </TouchableOpacity>
               </View>
+              <ReportView/>
             <Text style={styles.text}>à {localStorage.getItem("baseName")}</Text>
 
 
@@ -56,7 +58,6 @@ export default class Reportscreen extends Component {
     )
   }
 }
-const image = { uri: "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2t5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" };
 
 const styles = StyleSheet.create({
   container: {
