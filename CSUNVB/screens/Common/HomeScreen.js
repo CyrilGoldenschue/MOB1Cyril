@@ -1,51 +1,109 @@
 import React, { Component } from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
+
+import APIKit from "../../components/api"
 
 export default class Homescreen extends Component {
   constructor(props){
     super(props)
   }
   
-  
-    //TODO emêcher le remove avant l'activation du bouton
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View style={[{ width: "50%" , marginLeft: "25%" }]}>
-              <Button
-                size={15}
-                color="blue"
-                onPress={() => {
-                  this.props.navigation.push("Report")
-                }}
-                title="Rapport"
-              />
+      <View style={styles.container}>
+        
+        <ImageBackground source={image} style={styles.image}>
+        <View>
+            <TouchableOpacity 
+              activeOpacity={0.95} 
+              style={styles.buttonMenu} 
+              onPress={() => {
+                //localStorage.setItem('nav', "Consult");
+                this.props.navigation.navigate("Consult")
+              }}>
+                <Text style={styles.textMenu}>Consultation</Text>
+            </TouchableOpacity>
+
           </View>
-          <View style={[{ width: "50%" , marginLeft: "25%" }]}>
-              <Button
-                size={15}
-                color="blue"
-                onPress={() => {
-                  this.props.navigation.push("Consult")
-                }}
-                title="Consultation"
-              />
+        <View>
+            <TouchableOpacity 
+              activeOpacity={0.95} 
+              style={styles.buttonMenu} 
+              onPress={() => {
+                localStorage.setItem('nav', "Report");
+                this.props.navigation.navigate("Report")
+              }}>
+                <Text style={styles.textMenu}>Rapport</Text>
+            </TouchableOpacity>
+
           </View>
-          <View style={[{ width: "50%" , marginLeft: "25%" }]}>
-              <Button
-                size={15}
-                color="blue"
-                onPress={() => {
-                  localStorage.removeItem('user_token');
-                  let userToken = localStorage.getItem('user_token')
-                  this.props.auth(userToken)
-                  
-                  
-                }}
-                title="Se déconnecter"
-              />
+          
+          <View>
+            <TouchableOpacity 
+              activeOpacity={0.95} 
+              style={styles.buttonLogout} 
+              onPress={() => {
+                localStorage.removeItem('user_token');
+                localStorage.removeItem('nav');
+                let userToken = localStorage.getItem('user_token')
+                this.props.auth(userToken)
+              }}>
+                <Text style={styles.textLogout}>Se déconnecter</Text>
+            </TouchableOpacity>
           </View>
+          </ImageBackground>
       </View>
     )
   }
 }
+const image = { uri: "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2t5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    alignSelf: "stretch",
+    textAlign: "center",
+    
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    
+  },  
+  buttonMenu: {
+    width: "96%", 
+    marginLeft: "2%",
+    flexDirection: 'row', 
+    height: 250, 
+    backgroundColor: 'rgb(33, 150, 243)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 50,
+    elevation:3,
+  },
+    buttonLogout: {
+      width: "96%", 
+      marginLeft: "2%",
+      flexDirection: 'row', 
+      height: 70, 
+      backgroundColor: 'rgb(33, 150, 243)',
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation:3,
+  },
+  textMenu: {
+    fontSize: 50,
+    color: "white",
+    fontWeight: 'bold',
+  },
+  textLogout: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: 'bold',
+  }
+  
+});
+
+
