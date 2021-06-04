@@ -90,9 +90,7 @@ export default class Homescreen extends Component {
               activeOpacity={0.95} 
               style={styles.buttonLogout} 
               onPress={() => {
-                localStorage.removeItem('user_token');
-                localStorage.removeItem('nav');
-                localStorage.removeItem('base');
+                localStorage.clear();
                 let userToken = localStorage.getItem('user_token')
                 this.props.auth(userToken)
               }}>
