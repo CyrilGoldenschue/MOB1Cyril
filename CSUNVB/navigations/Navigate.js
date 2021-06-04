@@ -6,13 +6,11 @@ import ReportScreen from '../screens/Common/ReportScreen';
 import ConsultScreen from '../screens/Common/ConsultScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
 
-import {token} from "../components/api";
-
 const Stack = createStackNavigator();
 
 class Navigation extends Component {
     state = {
-        userToken: undefined
+        userToken: undefined,
     };
     
     constructor(props){
@@ -22,23 +20,26 @@ class Navigation extends Component {
     }
 
     handleTokenUpdate(data){
-        console.log('JE SUIS PAS FOU ?', data)
         this.setState({userToken: data})
     }
 
     render(){
         return( 
-            <Stack.Navigator>
-                {
+            
+                
                     this.state.userToken == null ? (
                         <>
+                        <Stack.Navigator>
                             <Stack.Screen name="Login" options={
                             {headerShown: false}}>
                                 {props => <LoginScreen {...props} auth={this.handleTokenUpdate} />}
-                                </Stack.Screen> 
+                            </Stack.Screen> 
+                        </Stack.Navigator>
                         </>
                     ) : (
                         <>
+                        <Stack.Navigator
+                        initialRouteName={localStorage.getItem('nav')}>
                             <Stack.Screen name="Home"  options={{
                                 headerShown:false
                             }} >  
@@ -54,10 +55,10 @@ class Navigation extends Component {
                             }} >  
                                 {props => <ConsultScreen {...props}  />}
                             </Stack.Screen>
+                        </Stack.Navigator>
                         </>
                     )
-                }
-            </Stack.Navigator>
+                
         )
     }
 }

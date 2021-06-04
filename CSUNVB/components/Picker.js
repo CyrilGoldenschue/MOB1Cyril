@@ -33,7 +33,7 @@ class PickerView extends Component {
   
     render() {
         return (
-            <View>
+            <>
             <Picker style={styles.picker}
                 onValueChange={(itemValue, itemIndex) => this.selectedValue = itemValue}
             >
@@ -41,7 +41,7 @@ class PickerView extends Component {
             </Picker>
 
             
-            </View>
+            </>
         );
     }
 }

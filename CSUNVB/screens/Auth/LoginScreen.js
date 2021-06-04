@@ -21,7 +21,6 @@ class LoginScreen extends Component {
   onPressLogin() {
     const {initials, password} = this.state;
     const payload = {initials, password};
-    console.log(payload);
 
     const onSuccess = ({data}) => {
       this.setState({userToken: data.token});
