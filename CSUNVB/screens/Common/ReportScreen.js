@@ -7,13 +7,14 @@ let textBack = "<"
 
 export default class Reportscreen extends Component {
   constructor(props){
-    super(props)
+    super(props),
+    this.state = ({sort: ""})
   }
   
   render() {
     return (
       <View style={styles.container}>
-          <View style={styles.header}>
+          <View style={styles.headerReport}>
             <TouchableOpacity 
               activeOpacity={0.95} 
               style={styles.buttonGoBack} 
@@ -32,8 +33,7 @@ export default class Reportscreen extends Component {
                   activeOpacity={0.95} 
                   style={styles.buttonCheck} 
                   onPress={() => {
-                    localStorage.setItem('nav', "Home");
-                    this.props.navigation.navigate("Home")
+                    this.setState({sort: "pharma"})
                   }}>
                     <Text style={styles.text}>Pharmacheck</Text>
                 </TouchableOpacity>
@@ -41,16 +41,15 @@ export default class Reportscreen extends Component {
                   activeOpacity={0.95} 
                   style={styles.buttonCheck} 
                   onPress={() => {
-                    localStorage.setItem('nav', "Home");
-                    this.props.navigation.navigate("Home")
+                    this.setState({sort: "nova"})
                   }}>
                     <Text style={styles.text}>NovaCheck</Text>
                 </TouchableOpacity>
               </View>
-              <ReportView/>
             <Text style={styles.text}>à {localStorage.getItem("baseName")}</Text>
 
 
+            <ReportView sort={this.state.sort}/>
 
           </View>
           
@@ -74,8 +73,7 @@ const styles = StyleSheet.create({
     
   },
   
-  header: {
-    flex: .3,
+  headerReport: {
     flexDirection: 'row',
   },
   page: {
@@ -103,7 +101,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     backgroundColor: 'rgb(33, 150, 243)',
-    width: 200, 
+    width: 150, 
     height: 30,
   },
 

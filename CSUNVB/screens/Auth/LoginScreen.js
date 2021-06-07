@@ -12,8 +12,6 @@ class LoginScreen extends Component {
     this.state = {initials: "", password: "", base: ""}
   }
 
-  //TODO envoyer la base aussi
-
   onInitialsChange = initials => {
     this.setState({initials: initials});
     

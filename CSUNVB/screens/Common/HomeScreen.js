@@ -94,7 +94,7 @@ export default class Homescreen extends Component {
                 let userToken = localStorage.getItem('user_token')
                 this.props.auth(userToken)
               }}>
-                <Text style={styles.textLogout}>Se déconnecter   {this.state.initials}@{this.state.base}</Text>
+                <Text style={styles.textLogout}>Se déconnecter {this.state.initials}@{this.state.base}</Text>
             </TouchableOpacity>
           </View>
           </ImageBackground>
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(33, 150, 243)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 50,
+    marginBottom: 30,
+    marginTop: 10,
     elevation:3,
   },
     buttonLogout: {
