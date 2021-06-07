@@ -70,7 +70,7 @@ class LoginScreen extends Component {
                 size={15}
                 color="blue"
                 onPress={this.onPressLogin.bind(this)}
-                title="Se Log"
+                title="Se connecter"
               />
             </View>
         </ImageBackground>

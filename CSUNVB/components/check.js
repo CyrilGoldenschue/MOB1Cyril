@@ -6,8 +6,9 @@ import APIKit from "../components/api"
 class ReportsView extends Component {
     constructor(props){
         super(props)
-        this.state = {reports: []}
+        this.state = {reportsPharma: [], reportsNova: []}
     }    
+
 
     onChanged1(text){
         let newText = '';
@@ -46,7 +47,7 @@ class ReportsView extends Component {
         APIKit.get('missingchecks/'+localStorage.getItem("base"), config)
             .then(res => {
                 const data = res.data
-                const reports = data.pharma.map(u =>
+                const reportsPharma = data.pharma.map(u =>
                     <View style={styles.back} key={ Math.random().toString(36).substr(2, 9) }>
                         <Text>Du lot {u.batch_number} de  {u.drug}</Text>
                         <Text>Pour le {u.date}</Text>
@@ -82,9 +83,47 @@ class ReportsView extends Component {
                     )
 
                     this.setState({
-                        reports
+                        reportsPharma: reportsPharma
                     })
 
+                const reportsNova = data.nova.map(u =>
+                    <View style={styles.back} key={ Math.random().toString(36).substr(2, 9) }>
+                        <Text>Du lot {u.batch_number} de  {u.drug}</Text>
+                        <Text>Pour le {u.date}</Text>
+                        <View style={styles.quantity}>
+                            <Text>Matin :</Text>
+                            <TextInput
+                                style={styles.numberInput}
+                                keyboardType='numeric' // This prop help to open numeric keyboard
+                                onChangeText={(text)=>this.onChanged1(text)}
+                                value={u.start === null ? "" : u.start}
+                                maxLength={2}
+                            />
+                            
+                            <Text>Soir : {u.end}</Text>
+                            <TextInput
+                                style={styles.numberInput}
+                                keyboardType='numeric' // This prop help to open numeric keyboard
+                                onChangeText={(text)=>this.onChanged2(text)}
+                                value={u.end === null ? "" : u.end}
+                                maxLength={2}
+                            />
+                            <TouchableOpacity 
+                                activeOpacity={0.95} 
+                                style={styles.buttonSend} 
+                                onPress={() => {
+                                    this.setState({sort: "pharma"})
+                                }}>
+                                    <Text style={styles.text}>Envoyer</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    
+                    )
+
+                    this.setState({
+                        reportsNova: reportsNova
+                    })
             })
             .catch((error) => {
                 console.log(error)
@@ -95,10 +134,19 @@ class ReportsView extends Component {
     }
   
     render() {
+        console.log(this.props)
         return (
             <>
+                { 
+                this.props.sort == "pharma" ? this.state.reportsPharma : ""
+                }
+                {
+                this.props.sort == "nova" ? this.state.reportsNova : ""
+                }
+
+                
             
-                {this.state.reports}
+                
 
             
             </>
