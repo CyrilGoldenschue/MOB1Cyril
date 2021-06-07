@@ -37,8 +37,7 @@ class ReportsView extends Component {
     }
 
     getReportsData() {
-        
-        console.log('missingchecks/'+localStorage.getItem("base"))
+    
         let config = {
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem("user_token")
@@ -134,7 +133,6 @@ class ReportsView extends Component {
     }
   
     render() {
-        console.log(this.props)
         return (
             <>
                 { 
