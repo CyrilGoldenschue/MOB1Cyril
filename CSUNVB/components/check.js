@@ -53,7 +53,7 @@ class ReportsView extends Component {
                         <Text style={styles.titleReport}>Du lot {u.batch_number} de  {u.drug}</Text>
                         <Text>Pour le {Moment(u.date).format("D MMM")}</Text>
                         <View style={styles.quantity}>
-                            <Text>Matin :</Text>
+                            <Text style={styles.titleReport}>Matin :</Text>
                             <TextInput
                                 style={styles.numberInput}
                                 keyboardType='numeric' // This prop help to open numeric keyboard
@@ -62,7 +62,7 @@ class ReportsView extends Component {
                                 maxLength={2}
                             />
                             
-                            <Text>Soir : {u.end}</Text>
+                            <Text style={styles.titleReport}>Soir : {u.end}</Text>
                             <TextInput
                                 style={styles.numberInput}
                                 keyboardType='numeric' // This prop help to open numeric keyboard
@@ -92,19 +92,19 @@ class ReportsView extends Component {
                         <Text style={styles.titleReport}>Du {u.drug} de la nova {u.nova} </Text>
                         <Text>Pour le {Moment(u.date).format("D MMM")}</Text>
                         <View style={styles.quantity}>
-                            <Text>Matin :</Text>
+                            <Text style={styles.titleReport}>Matin :</Text>
                             <TextInput
                                 style={styles.numberInput}
-                                keyboardType='numeric' // This prop help to open numeric keyboard
+                                keyboardType='numeric' 
                                 onChangeText={(text)=>this.onChanged1(text)}
                                 value={u.start === null ? "" : u.start}
                                 maxLength={2}
                             />
                             
-                            <Text>Soir : {u.end}</Text>
+                            <Text style={styles.titleReport}>Soir : {u.end}</Text>
                             <TextInput
                                 style={styles.numberInput}
-                                keyboardType='numeric' // This prop help to open numeric keyboard
+                                keyboardType='numeric' 
                                 onChangeText={(text)=>this.onChanged2(text)}
                                 value={u.end === null ? "" : u.end}
                                 maxLength={2}
