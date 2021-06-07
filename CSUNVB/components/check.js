@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import Moment from 'moment';
 
 import APIKit from "../components/api"
 
@@ -46,10 +47,12 @@ class ReportsView extends Component {
         APIKit.get('missingchecks/'+localStorage.getItem("base"), config)
             .then(res => {
                 const data = res.data
+                
+                console.log(data)
                 const reportsPharma = data.pharma.map(u =>
                     <View style={styles.back} key={ Math.random().toString(36).substr(2, 9) }>
-                        <Text>Du lot {u.batch_number} de  {u.drug}</Text>
-                        <Text>Pour le {u.date}</Text>
+                        <Text style={styles.titleReport}>Du lot {u.batch_number} de  {u.drug}</Text>
+                        <Text>Pour le {Moment(u.date).format("d MMM")}</Text>
                         <View style={styles.quantity}>
                             <Text>Matin :</Text>
                             <TextInput
@@ -87,8 +90,8 @@ class ReportsView extends Component {
 
                 const reportsNova = data.nova.map(u =>
                     <View style={styles.back} key={ Math.random().toString(36).substr(2, 9) }>
-                        <Text>Du lot {u.batch_number} de  {u.drug}</Text>
-                        <Text>Pour le {u.date}</Text>
+                        <Text style={styles.titleReport}>Du {u.drug} de la nova {u.nova} </Text>
+                        <Text>Pour le {Moment(u.date).format("d MMM")}</Text>
                         <View style={styles.quantity}>
                             <Text>Matin :</Text>
                             <TextInput
@@ -183,6 +186,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#c8c9cc',
     
   },
+  titleReport: {
+      fontWeight: "bold",
+      fontSize: 18,
+  }
   
 });
 
