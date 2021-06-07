@@ -47,12 +47,11 @@ class ReportsView extends Component {
         APIKit.get('missingchecks/'+localStorage.getItem("base"), config)
             .then(res => {
                 const data = res.data
-                
-                console.log(data)
+                Moment.locale("fr")
                 const reportsPharma = data.pharma.map(u =>
                     <View style={styles.back} key={ Math.random().toString(36).substr(2, 9) }>
                         <Text style={styles.titleReport}>Du lot {u.batch_number} de  {u.drug}</Text>
-                        <Text>Pour le {Moment(u.date).format("d MMM")}</Text>
+                        <Text>Pour le {Moment(u.date).format("D MMM")}</Text>
                         <View style={styles.quantity}>
                             <Text>Matin :</Text>
                             <TextInput
@@ -91,7 +90,7 @@ class ReportsView extends Component {
                 const reportsNova = data.nova.map(u =>
                     <View style={styles.back} key={ Math.random().toString(36).substr(2, 9) }>
                         <Text style={styles.titleReport}>Du {u.drug} de la nova {u.nova} </Text>
-                        <Text>Pour le {Moment(u.date).format("d MMM")}</Text>
+                        <Text>Pour le {Moment(u.date).format("D MMM")}</Text>
                         <View style={styles.quantity}>
                             <Text>Matin :</Text>
                             <TextInput
