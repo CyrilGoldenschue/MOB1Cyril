@@ -7,14 +7,15 @@ import APIKit from "../components/api"
 class ReportsView extends Component {
     constructor(props){
         super(props)
-        this.state = {reportsPharma: [], reportsNova: []}
+        this.state = {reportsPharma: [], reportsNova: [], myNumber1: "", myNumber2: ""}
+
     }    
 
 
     onChanged1(text){
         let newText = '';
         let numbers = '0123456789';
-    
+
         for (var i=0; i < text.length; i++) {
             text = text.replace(/[^0-9]/g, '')
             if(numbers.indexOf(text[i]) > -1 ) {
@@ -37,6 +38,45 @@ class ReportsView extends Component {
         }
     }
 
+    onSendReport(data){
+        console.log(this.props.sort)
+        console.log(data)
+        let config = {
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem("user_token")
+            }
+          }
+        if(this.props.sort == "pharma"){
+            const {batch_id, drugsheet_id, date, start, end} = data
+            const payload = {batch_id, drugsheet_id, date, start, end}
+
+            
+            payload.start = this.state.myNumber1 != "" ? parseInt(this.state.myNumber1) : data.start
+            payload.end = this.state.myNumber2 != "" ? parseInt(this.state.myNumber2) : data.end
+            
+            console.log(payload)
+            //APIKit.get('pharmacheck/', config, )
+
+
+
+          }else if(this.props.sort == "nova"){
+            const {nova_id, drugsheet_id, date, start, end} = data
+            const payload = {nova_id, drugsheet_id, date, start, end}
+
+            
+            payload.start = this.state.myNumber1 != "" ? parseInt(this.state.myNumber1) : data.start
+            payload.end = this.state.myNumber2 != "" ? parseInt(this.state.myNumber2) : data.end
+            
+            console.log(payload)
+           //APIKit.get('novacheck/', config)
+
+
+
+          }
+    }
+
+    
+
     getReportsData() {
     
         let config = {
@@ -58,23 +98,25 @@ class ReportsView extends Component {
                                 style={styles.numberInput}
                                 keyboardType='numeric' // This prop help to open numeric keyboard
                                 onChangeText={(text)=>this.onChanged1(text)}
-                                value={u.start === null ? "" : u.start}
                                 maxLength={2}
+                                defaultValue={u.start}
                             />
                             
-                            <Text style={styles.titleReport}>Soir : {u.end}</Text>
+                            <Text style={styles.titleReport}>Soir :</Text>
                             <TextInput
                                 style={styles.numberInput}
                                 keyboardType='numeric' // This prop help to open numeric keyboard
                                 onChangeText={(text)=>this.onChanged2(text)}
-                                value={u.end === null ? "" : u.end}
                                 maxLength={2}
+                                defaultValue={u.end}
+                                
                             />
                             <TouchableOpacity 
                                 activeOpacity={0.95} 
                                 style={styles.buttonSend} 
                                 onPress={() => {
                                     this.setState({sort: "pharma"})
+                                    this.onSendReport(u)
                                 }}>
                                     <Text style={styles.text}>Envoyer</Text>
                             </TouchableOpacity>
@@ -97,7 +139,7 @@ class ReportsView extends Component {
                                 style={styles.numberInput}
                                 keyboardType='numeric' 
                                 onChangeText={(text)=>this.onChanged1(text)}
-                                value={u.start === null ? "" : u.start}
+                                defaultValue={u.start}
                                 maxLength={2}
                             />
                             
@@ -106,7 +148,7 @@ class ReportsView extends Component {
                                 style={styles.numberInput}
                                 keyboardType='numeric' 
                                 onChangeText={(text)=>this.onChanged2(text)}
-                                value={u.end === null ? "" : u.end}
+                                defaultValue={u.end}
                                 maxLength={2}
                             />
                             <TouchableOpacity 
@@ -114,6 +156,7 @@ class ReportsView extends Component {
                                 style={styles.buttonSend} 
                                 onPress={() => {
                                     this.setState({sort: "pharma"})
+                                    this.onSendReport(u)
                                 }}>
                                     <Text style={styles.text}>Envoyer</Text>
                             </TouchableOpacity>
