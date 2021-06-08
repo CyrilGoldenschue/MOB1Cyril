@@ -21,7 +21,6 @@ class ReportsView extends Component {
             if(numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
                 this.setState({ myNumber1: newText });
-                console.log(this.state.myNumber1)
             }
         }
         
@@ -36,14 +35,11 @@ class ReportsView extends Component {
             if(numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
                 this.setState({ myNumber2: newText });
-                console.log(this.state.myNumber2)
             }
         }
     }
 
     onSendReport(data){
-        console.log(this.props.sort)
-        console.log(data)
 
 
         const onSuccess = ({data}) => {
@@ -66,7 +62,6 @@ class ReportsView extends Component {
             payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : (data.start).toString()
             payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 : (data.end).toString()
             
-            console.log(payload)
             APIKit.post('pharmacheck', payload, config)
             .then(onSuccess)
             .catch(onFailure);
@@ -80,7 +75,6 @@ class ReportsView extends Component {
             payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : (data.start).toString()
             payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 : (data.end).toString()
             
-            console.log(payload)
 
            APIKit.post('novacheck', payload, config)
             .then(onSuccess)
