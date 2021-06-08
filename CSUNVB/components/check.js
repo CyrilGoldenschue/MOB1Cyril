@@ -21,8 +21,10 @@ class ReportsView extends Component {
             if(numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
                 this.setState({ myNumber1: newText });
+                console.log(this.state.myNumber1)
             }
         }
+        
     }
 
     onChanged2(text){
@@ -34,6 +36,7 @@ class ReportsView extends Component {
             if(numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
                 this.setState({ myNumber2: newText });
+                console.log(this.state.myNumber2)
             }
         }
     }
@@ -41,6 +44,16 @@ class ReportsView extends Component {
     onSendReport(data){
         console.log(this.props.sort)
         console.log(data)
+
+
+        const onSuccess = ({data}) => {
+            console.log("success")
+        };
+    
+        const onFailure = error => {
+            console.log(error && error.response);
+        };
+
         let config = {
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem("user_token")
@@ -50,13 +63,13 @@ class ReportsView extends Component {
             const {batch_id, drugsheet_id, date, start, end} = data
             const payload = {batch_id, drugsheet_id, date, start, end}
 
-            
-            payload.start = this.state.myNumber1 != "" ? parseInt(this.state.myNumber1) : data.start
-            payload.end = this.state.myNumber2 != "" ? parseInt(this.state.myNumber2) : data.end
+            payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : (data.start).toString()
+            payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 : (data.end).toString()
             
             console.log(payload)
-            //APIKit.get('pharmacheck/', config, )
-
+            APIKit.post('pharmacheck', payload, config)
+            .then(onSuccess)
+            .catch(onFailure);
 
 
           }else if(this.props.sort == "nova"){
@@ -64,12 +77,14 @@ class ReportsView extends Component {
             const payload = {nova_id, drugsheet_id, date, start, end}
 
             
-            payload.start = this.state.myNumber1 != "" ? parseInt(this.state.myNumber1) : data.start
-            payload.end = this.state.myNumber2 != "" ? parseInt(this.state.myNumber2) : data.end
+            payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : (data.start).toString()
+            payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 : (data.end).toString()
             
             console.log(payload)
-           //APIKit.get('novacheck/', config)
 
+           APIKit.post('novacheck', payload, config)
+            .then(onSuccess)
+            .catch(onFailure);
 
 
           }
