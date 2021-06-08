@@ -73,8 +73,8 @@ class ReportsView extends Component {
 
 
           }else if(this.props.sort == "nova"){
-            const {nova_id, drugsheet_id, date, start, end} = data
-            const payload = {nova_id, drugsheet_id, date, start, end}
+            const {nova_id, drug_id, drugsheet_id, date, start, end} = data
+            const payload = {nova_id, drug_id, drugsheet_id, date, start, end}
 
             
             payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : (data.start).toString()
