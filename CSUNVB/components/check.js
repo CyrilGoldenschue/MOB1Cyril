@@ -8,6 +8,7 @@ class ReportsView extends Component {
     constructor(props){
         super(props)
         this.state = {reportsPharma: [], reportsNova: [], myNumber1: "", myNumber2: ""}
+        
 
     }    
 
@@ -20,7 +21,7 @@ class ReportsView extends Component {
             text = text.replace(/[^0-9]/g, '')
             if(numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
-                this.setState({ myNumber1: newText });
+                this.setState({ myNumber1: newText});
             }
         }
         
@@ -34,7 +35,7 @@ class ReportsView extends Component {
             text = text.replace(/[^0-9]/g, '')
             if(numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
-                this.setState({ myNumber2: newText });
+                this.setState({ myNumber2: newText});
             }
         }
     }
@@ -43,7 +44,7 @@ class ReportsView extends Component {
 
 
         const onSuccess = ({data}) => {
-            console.log("success")
+            this.getReportsData()
         };
     
         const onFailure = error => {
@@ -59,8 +60,8 @@ class ReportsView extends Component {
             const {batch_id, drugsheet_id, date, start, end} = data
             const payload = {batch_id, drugsheet_id, date, start, end}
 
-            payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : (data.start).toString()
-            payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 : (data.end).toString()
+            payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : data.start == null ? onFailure : (data.start).toString()
+            payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 :  data.end == null ? onFailure : (data.end).toString()
             
             APIKit.post('pharmacheck', payload, config)
             .then(onSuccess)
@@ -195,12 +196,6 @@ class ReportsView extends Component {
                 {
                 this.props.sort == "nova" ? this.state.reportsNova : ""
                 }
-
-                
-            
-                
-
-            
             </>
         );
     }
