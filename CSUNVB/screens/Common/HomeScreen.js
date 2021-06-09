@@ -64,8 +64,7 @@ export default class Homescreen extends Component {
               activeOpacity={0.95} 
               style={styles.buttonMenu} 
               onPress={() => {
-                //TODO remettre le setItem au début de l'ajout de la page de consultation
-                //localStorage.setItem('nav', "Consult");
+                localStorage.setItem('nav', "Consult");
                 this.props.navigation.navigate("Consult")
               }}>
                 <Text style={styles.textMenu}>Consultation</Text>
