@@ -39,7 +39,7 @@ class Navigation extends Component {
                     ) : (
                         <>
                         <Stack.Navigator
-                        initialRouteName={localStorage.getItem('nav')}>
+                        initialRouteName={localStorage.getItem('nav') == null ? "Home" : localStorage.getItem('nav')}>
                             <Stack.Screen name="Home"  options={{
                                 headerShown:false
                             }} >  
