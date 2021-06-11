@@ -10,6 +10,13 @@ export default class Reportscreen extends Component {
     super(props), (this.state = { sort: "" });
   }
 
+  componentDidMount() {
+    // Handle focus, in case of back button hit
+    this.props.navigation.addListener("focus", () => {
+      //console.log("Got focused");
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   title: {
-    fontSize: 50,
+    fontSize: 45,
     marginLeft: "2%",
     fontWeight: "bold",
   },

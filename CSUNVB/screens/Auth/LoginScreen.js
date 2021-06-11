@@ -1,6 +1,5 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import {ImageBackground, StyleSheet, Text, TextInput, View, Button, Alert  } from 'react-native';
+import {ImageBackground, StyleSheet, Text, TextInput, View, Button  } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
 import PickerView from "../../components/Picker"
@@ -30,6 +29,7 @@ class LoginScreen extends Component {
       this.setState({userToken: data.token});
       localStorage.setItem('user_token', this.state.userToken);
       localStorage.setItem('base', this.state.base )
+      localStorage.setItem('nav', "Home" )
       this.props.auth(data.token)
     };
 
@@ -41,7 +41,7 @@ class LoginScreen extends Component {
       .then(onSuccess)
       .catch(onFailure);
   }
-
+//TODO faire les messages d'erreur
   render() {
     return (
       <View style={styles.container}>

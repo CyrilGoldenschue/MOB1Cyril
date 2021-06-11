@@ -10,7 +10,14 @@ export default class Reportscreen extends Component {
     super(props),
     this.state = ({sort: ""})
   }
-  
+
+  componentDidMount() {
+    // Handle focus, in case of back button hit
+    this.props.navigation.addListener("focus", () => {
+      console.log("Got focused");
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -20,7 +27,7 @@ export default class Reportscreen extends Component {
               style={styles.buttonGoBack} 
               onPress={() => {
                 localStorage.setItem('nav', "Home");
-                this.props.navigation.navigate("Home")
+                this.props.navigation.navigate("Home");
               }}>
                 <Text style={styles.textBack}>{textBack}</Text>
             </TouchableOpacity>
@@ -115,7 +122,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   title: {
-    fontSize: 50,
+    fontSize: 45,
     marginLeft: "15%",
     fontWeight: "bold"
   }
