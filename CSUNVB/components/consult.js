@@ -84,7 +84,7 @@ class ConsultationView extends Component {
 
                 const reportsStup = data.drug.map(u =>
                     <View key={ u.id } style={{marginBottom: 10}}>
-                        <Text style={{textAlign: 'left'}}>Le {Moment(u.date).format("D m YY")} à {u.base}</Text>
+                        <Text style={{textAlign: 'left'}}>Semaine {(u.week)} à {u.base}</Text>
                     </View>
                     
                     )
