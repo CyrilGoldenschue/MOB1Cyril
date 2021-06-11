@@ -67,9 +67,6 @@ class DataActionView extends Component {
                 )}
                 <View>
                     <Text style={ styles.text}>{u.action}</Text>
-                </View>
-                
-                <View style={ styles.dateContainer}>
                     <Text style={styles.date}>{u.at}</Text>
                 </View>
             </View>
