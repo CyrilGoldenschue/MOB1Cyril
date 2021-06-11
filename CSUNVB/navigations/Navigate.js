@@ -5,6 +5,7 @@ import HomeScreen from '../screens/Common/HomeScreen';
 import ReportScreen from '../screens/Common/ReportScreen';
 import ConsultScreen from '../screens/Common/ConsultScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
+import ActionScreen from '../screens/Common/ActionScreen';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,11 @@ class Navigation extends Component {
                                 headerShown:false
                             }} >  
                                 {props => <ConsultScreen {...props}  />}
+                            </Stack.Screen>
+                            <Stack.Screen name="Action"  options={{
+                                headerShown:false
+                            }} >  
+                                {props => <ActionScreen {...props}  />}
                             </Stack.Screen>
                         </Stack.Navigator>
                         </>

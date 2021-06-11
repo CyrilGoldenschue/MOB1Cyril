@@ -50,7 +50,7 @@ export default class Reportscreen extends Component {
             </TouchableOpacity>
           </View>
           <View style={{marginLeft: 20, marginTop: 20}}>
-            <ConsultationView sort={this.state.sort} />
+          <ConsultationView nav={this.props.navigation} sort={this.state.sort} />
           </View>
         </View>
       </View>

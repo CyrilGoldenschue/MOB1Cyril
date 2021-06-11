@@ -73,7 +73,13 @@ class ConsultationView extends Component {
                 Moment.locale("fr")
                 const reportsGarde = data.shift.map(u =>
                     <View key={ u.id } style={{marginBottom: 10}}>
-                        <Text style={{textAlign: 'left'}}>Pour le {Moment(u.date).format("Y-MM-D")} à {u.base}</Text>
+                        <Text 
+                        style={{textAlign: 'left'}}
+                        onPress={() => 
+                            localStorage.setItem('nav', "Action"),
+                            this.props.nav.navigate("Action", u.id)}>
+                            Pour le {Moment(u.date).format("Y-MM-D")} à {u.base}
+                        </Text>
                     </View>
                     
                     )
@@ -84,7 +90,9 @@ class ConsultationView extends Component {
 
                 const reportsStup = data.drug.map(u =>
                     <View key={ u.id } style={{marginBottom: 10}}>
-                        <Text style={{textAlign: 'left'}}>Semaine {(u.week)} à {u.base}</Text>
+                        <Text style={{textAlign: 'left'}}>
+                            Semaine {(u.week)} à {u.base}
+                        </Text>
                     </View>
                     
                     )
