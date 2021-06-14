@@ -44,6 +44,7 @@ class ReportsView extends Component {
 
 
         const onSuccess = ({data}) => {
+            alert("c'est noté")
             this.getReportsData()
         };
     
