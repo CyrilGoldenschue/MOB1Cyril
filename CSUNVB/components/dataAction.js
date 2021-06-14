@@ -65,7 +65,7 @@ class DataActionView extends Component {
                 ) : (
                     <Text style={ styles.night}>N</Text>
                 )}
-                <View>
+                <View style={styles.textAction}>
                     <Text style={ styles.text}>{u.action}</Text>
                     <Text style={styles.date}>{u.at}</Text>
                 </View>
@@ -103,6 +103,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     fontWeight: "bold",
+    textAlign: "left"
+  },
+  textAction: {
     textAlign: "left"
   },
   date: {
