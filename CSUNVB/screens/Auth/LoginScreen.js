@@ -65,6 +65,7 @@ class LoginScreen extends Component {
             <Text style={styles.text}>Base</Text>
             <Picker
               style={styles.picker}
+              selectedValue={(this.state.base) || '0'}
               onValueChange={(value) => this.setState({ base: value })}
             >
               <Picker.Item
