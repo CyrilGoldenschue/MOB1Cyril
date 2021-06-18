@@ -16,7 +16,7 @@ export default class Actionscreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header nav={this.props.navigation} title="Mes actions" />
+        <Header nav={this.props.navigation} title="Mes actions" previous="Consult" />
         <View style={styles.page}>
           <DataAction />
         </View>

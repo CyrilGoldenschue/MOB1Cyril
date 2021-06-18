@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity
-} from "react-native";
-import Moment from "moment";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 
 class HeaderView extends Component {
   constructor(props) {
@@ -16,23 +9,20 @@ class HeaderView extends Component {
   render() {
     return (
       <>
-        
-        
-
         <View style={styles.headerContainer}>
           <TouchableOpacity
             activeOpacity={0.95}
             style={styles.buttonGoBack}
             onPress={() => {
               localStorage.setItem("nav", "Consult");
-              localStorage.removeItem("actionId")
-              this.props.nav.navigate("Consult");
+              localStorage.removeItem("actionId");
+              this.props.nav.navigate(this.props.previous);
             }}
           >
             <Image
-                  style={styles.tinyLogo}
-                  source={require('@expo/../../assets/arrowLeft.png')}
-                />
+              style={styles.tinyLogo}
+              source={require("@expo/../../assets/arrowLeft.png")}
+            />
           </TouchableOpacity>
           <Text style={styles.title}>{this.props.title}</Text>
         </View>
@@ -42,9 +32,9 @@ class HeaderView extends Component {
 }
 
 const styles = StyleSheet.create({
-    headerContainer: {
-        flexDirection: "row",
-      },
+  headerContainer: {
+    flexDirection: "row",
+  },
   tinyLogo: {
     width: 40,
     height: 40,

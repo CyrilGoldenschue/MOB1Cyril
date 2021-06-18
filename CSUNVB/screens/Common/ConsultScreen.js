@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
+import Header from "../../components/header";
 import ConsultationView from "../../components/consultData";
-
-let textBack = "<";
 
 export default class Reportscreen extends Component {
   constructor(props) {
@@ -13,19 +12,8 @@ export default class Reportscreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.headerConsult}>
-          <TouchableOpacity
-            activeOpacity={0.95}
-            style={styles.buttonGoBack}
-            onPress={() => {
-              localStorage.setItem("nav", "Home");
-              this.props.navigation.navigate("Home");
-            }}
-          >
-            <Text style={styles.textBack}>{textBack}</Text>
-          </TouchableOpacity>
-          <Text style={styles.title}>Consultation</Text>
-        </View>
+        
+        <Header nav={this.props.navigation} title="Consultations" previous="Home" />
 
         <View style={styles.page}>
           <Text style={styles.text}>Voir mes rapports de</Text>
@@ -65,9 +53,6 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     textAlign: "center",
   },
-  headerConsult: {
-    flexDirection: "row",
-  },
   page: {
     flex: 3,
     marginTop: 20,
@@ -76,17 +61,6 @@ const styles = StyleSheet.create({
   div: {
     flexDirection: "row",
     justifyContent: "center",
-  },
-
-  buttonGoBack: {
-    width: 50,
-    height: 50,
-    marginLeft: "2%",
-    backgroundColor: "rgb(33, 150, 243)",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "2%",
-    elevation: 3,
   },
   buttonCheck: {
     marginLeft: 10,

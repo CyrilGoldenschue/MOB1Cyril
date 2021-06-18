@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
+import Header from "../../components/header";
 import ReportView from "../../components/reportCard"
 
 let textBack = "<"
@@ -14,18 +15,8 @@ export default class Reportscreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-          <View style={styles.headerReport}>
-            <TouchableOpacity 
-              activeOpacity={0.95} 
-              style={styles.buttonGoBack} 
-              onPress={() => {
-                localStorage.setItem('nav', "Home");
-                this.props.navigation.navigate("Home");
-              }}>
-                <Text style={styles.textBack}>{textBack}</Text>
-            </TouchableOpacity>
-            <Text style={styles.title}>Rapports</Text>
-          </View>
+        <Header nav={this.props.navigation} title="Rapports" previous="Home" />
+          
           <View style={styles.page}>
             <Text style={styles.text}>Faire un</Text>
             <View style={styles.div}>
