@@ -24,6 +24,11 @@ class API {
     return connectAPI.get('user', config)
   }
 
+  getMissingChecks(baseId){
+    return connectAPI.get('missingchecks/'+baseId, config)
+  }
+  
+
 
   postNovaCheck(payload){
     return connectAPI.post('novacheck', payload, config)

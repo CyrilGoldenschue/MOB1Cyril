@@ -40,12 +40,22 @@ class ReportsView extends Component {
 
     onSendReport(data){
 
+        const onSuccess = () => {
+            alert("c'est noté")
+            this.getReportsData()
+        };
+    
+        const onFailure = error => {
+            alert("les valeurs inscrites ne sont pas valable merci de mettre des nombres")
+            console.log(error && error.response);
+        };
+
         if(this.props.sort == "pharma"){
             const {batch_id, drugsheet_id, date, start, end} = data
             const payload = {batch_id, drugsheet_id, date, start, end}
 
-            payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : data.start == null ? onFailure : (data.start).toString()
-            payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 :  data.end == null ? onFailure : (data.end).toString()
+            payload.start = this.state.startNumber != "" ? this.state.startNumber : data.start == null ? onFailure : (data.start).toString()
+            payload.end = this.state.endNumber != "" ? this.state.endNumber :  data.end == null ? onFailure : (data.end).toString()
             
             APIKit.postPharmaCheck(payload)
             .then(onSuccess)
@@ -57,38 +67,22 @@ class ReportsView extends Component {
             const payload = {nova_id, drug_id, drugsheet_id, date, start, end}
 
             
-            payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : (data.start).toString()
-            payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 : (data.end).toString()
+            payload.start = this.state.startNumber != "" ? this.state.startNumber : (data.start).toString()
+            payload.end = this.state.endNumber != "" ? this.state.endNumber : (data.end).toString()
             
 
            APIKit.postNovaCheck(payload)
             .then(onSuccess)
             .catch(onFailure);
-
-            
-        const onSuccess = ({data}) => {
-            alert("c'est noté")
-            this.getReportsData()
-        };
-    
-        const onFailure = error => {
-            alert("les valeurs inscrites ne sont pas valable merci de mettre des nombres")
-            console.log(error && error.response);
-        };
-
           }
+          
     }
 
     
 
     getReportsData() {
     
-        let config = {
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem("user_token")
-            }
-          }
-        APIKit.get('missingchecks/'+localStorage.getItem("base"), config)
+        APIKit.getMissingChecks(localStorage.getItem('base'))
             .then(res => {
                 const data = res.data
                 Moment.locale("fr")
@@ -101,7 +95,7 @@ class ReportsView extends Component {
                             <TextInput
                                 style={styles.numberInput}
                                 keyboardType='numeric' // This prop help to open numeric keyboard
-                                onChangeText={(text)=>this.onChanged1(text)}
+                                onChangeText={(text)=>this.onChangedStartValue(text)}
                                 maxLength={2}
                                 defaultValue={u.start}
                             />
@@ -110,7 +104,7 @@ class ReportsView extends Component {
                             <TextInput
                                 style={styles.numberInput}
                                 keyboardType='numeric' // This prop help to open numeric keyboard
-                                onChangeText={(text)=>this.onChanged2(text)}
+                                onChangeText={(text)=>this.onChangedEndValue(text)}
                                 maxLength={2}
                                 defaultValue={u.end}
                                 
@@ -142,7 +136,7 @@ class ReportsView extends Component {
                             <TextInput
                                 style={styles.numberInput}
                                 keyboardType='numeric' 
-                                onChangeText={(text)=>this.onChanged1(text)}
+                                onChangeText={(text)=>this.onChangedStartValue(text)}
                                 defaultValue={u.start}
                                 maxLength={2}
                             />
@@ -151,7 +145,7 @@ class ReportsView extends Component {
                             <TextInput
                                 style={styles.numberInput}
                                 keyboardType='numeric' 
-                                onChangeText={(text)=>this.onChanged2(text)}
+                                onChangeText={(text)=>this.onChangedEndValue(text)}
                                 defaultValue={u.end}
                                 maxLength={2}
                             />
