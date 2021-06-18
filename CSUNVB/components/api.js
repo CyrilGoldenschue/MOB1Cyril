@@ -1,9 +1,22 @@
-import axios from 'axios';
+import axios from "axios";
 
-let APIKit = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/',
+let connectAPI = axios.create({
+  baseURL: "http://127.0.0.1:8000/api/",
   timeout: 10000,
 });
 
+let config = {
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("user_token"),
+  },
+};
+
+class API {
+  getBases() {
+    return connectAPI.get("bases", {});
+  }
+
+}
+
+const APIKit = new API();
 export default APIKit;
-export const token = localStorage.getItem('user_token')
