@@ -14,7 +14,7 @@ export default class Actionscreen extends Component {
   }
 
   render() {
-
+// TODO Ajouter un showMessage quand il n'y a pas d'affichage
 let action = this.props.action
     return (
       <View style={styles.container}>
