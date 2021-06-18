@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import Header from "../../components/header";
-import ReportView from "../../components/reportCard"
+import Header from "../../components/Header";
+import ReportView from "../../components/ReportCard"
 
 let textBack = "<"
 

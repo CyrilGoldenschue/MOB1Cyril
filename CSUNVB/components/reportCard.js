@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-nativ
 import Moment from 'moment';
 import { showMessage } from "react-native-flash-message";
 
-import APIKit from "./api"
+import APIKit from "./Api"
 
 class ReportsView extends Component {
     constructor(props){

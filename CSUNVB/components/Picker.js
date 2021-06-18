@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import {Picker} from '@react-native-picker/picker';
-import APIKit from "../components/api"
+import APIKit from "./Api"
 
 class PickerView extends Component {
     constructor(props){

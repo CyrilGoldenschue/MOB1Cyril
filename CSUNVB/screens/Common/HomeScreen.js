@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, View, Text, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 
-import APIKit from "../../components/api"
+import APIKit from "../../components/Api"
 
 export default class Homescreen extends Component {
   constructor(props){

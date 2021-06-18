@@ -12,7 +12,7 @@ import { showMessage } from "react-native-flash-message";
 import { Picker } from "@react-native-picker/picker";
 
 import PickerView from "../../components/Picker";
-import APIKit from "../../components/api";
+import APIKit from "../../components/Api";
 
 class LoginScreen extends Component {
   constructor(props) {

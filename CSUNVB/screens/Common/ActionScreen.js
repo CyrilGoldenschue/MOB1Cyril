@@ -4,8 +4,8 @@ import {
   StyleSheet,
 } from "react-native";
 
-import Header from "../../components/header";
-import DataAction from "../../components/dataAction";
+import Header from "../../components/Header";
+import DataAction from "../../components/ActionCard";
 
 export default class Actionscreen extends Component {
   constructor(props) {

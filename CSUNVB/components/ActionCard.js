@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import Moment from "moment";
 
-import APIKit from "../components/api";
+import APIKit from "./Api";
 
 class DataActionView extends Component {
   constructor(props) {

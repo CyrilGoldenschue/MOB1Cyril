@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-import Header from "../../components/header";
-import ConsultationView from "../../components/consultData";
+import Header from "../../components/Header";
+import ConsultationView from "../../components/ConsultCard";
 
 export default class Reportscreen extends Component {
   constructor(props) {

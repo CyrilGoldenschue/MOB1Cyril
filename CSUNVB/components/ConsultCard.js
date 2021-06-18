@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Moment from "moment";
 
-import APIKit from "./api";
+import APIKit from "./Api";
 
 class ConsultationView extends Component {
   constructor(props) {
