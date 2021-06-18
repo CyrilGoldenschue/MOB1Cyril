@@ -2,18 +2,16 @@ import React, { Component } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import Moment from 'moment';
 
-import APIKit from "../components/api"
+import APIKit from "./api"
 
 class ReportsView extends Component {
     constructor(props){
         super(props)
-        this.state = {reportsPharma: [], reportsNova: [], myNumber1: "", myNumber2: ""}
-        
-
+        this.state = {reportsPharma: [], reportsNova: [], startNumber: "", endNumber: ""}
     }    
 
 
-    onChanged1(text){
+    onChangedStartValue(text){
         let newText = '';
         let numbers = '0123456789';
 
@@ -21,13 +19,13 @@ class ReportsView extends Component {
             text = text.replace(/[^0-9]/g, '')
             if(numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
-                this.setState({ myNumber1: newText});
+                this.setState({ startNumber: newText});
             }
         }
         
     }
 
-    onChanged2(text){
+    onChangedEndValue(text){
         let newText = '';
         let numbers = '0123456789';
     
@@ -35,28 +33,13 @@ class ReportsView extends Component {
             text = text.replace(/[^0-9]/g, '')
             if(numbers.indexOf(text[i]) > -1 ) {
                 newText = newText + text[i];
-                this.setState({ myNumber2: newText});
+                this.setState({ endNumber: newText});
             }
         }
     }
 
     onSendReport(data){
 
-
-        const onSuccess = ({data}) => {
-            alert("c'est noté")
-            this.getReportsData()
-        };
-    
-        const onFailure = error => {
-            console.log(error && error.response);
-        };
-
-        let config = {
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem("user_token")
-            }
-          }
         if(this.props.sort == "pharma"){
             const {batch_id, drugsheet_id, date, start, end} = data
             const payload = {batch_id, drugsheet_id, date, start, end}
@@ -64,7 +47,7 @@ class ReportsView extends Component {
             payload.start = this.state.myNumber1 != "" ? this.state.myNumber1 : data.start == null ? onFailure : (data.start).toString()
             payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 :  data.end == null ? onFailure : (data.end).toString()
             
-            APIKit.post('pharmacheck', payload, config)
+            APIKit.postPharmaCheck(payload)
             .then(onSuccess)
             .catch(onFailure);
 
@@ -78,10 +61,20 @@ class ReportsView extends Component {
             payload.end = this.state.myNumber2 != "" ? this.state.myNumber2 : (data.end).toString()
             
 
-           APIKit.post('novacheck', payload, config)
+           APIKit.postNovaCheck(payload)
             .then(onSuccess)
             .catch(onFailure);
 
+            
+        const onSuccess = ({data}) => {
+            alert("c'est noté")
+            this.getReportsData()
+        };
+    
+        const onFailure = error => {
+            alert("les valeurs inscrites ne sont pas valable merci de mettre des nombres")
+            console.log(error && error.response);
+        };
 
           }
     }

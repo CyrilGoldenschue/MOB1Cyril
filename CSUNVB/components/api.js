@@ -23,6 +23,13 @@ class API {
   getUser(){
     return connectAPI.get('user', config)
   }
+
+
+  postNovaCheck(payload){
+    return connectAPI.post('novacheck', payload, config)
+  }
+
+
 }
 
 const APIKit = new API();

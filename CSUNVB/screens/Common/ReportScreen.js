@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import ReportView from "../../components/check"
+import ReportView from "../../components/reportCard"
 
 let textBack = "<"
 
@@ -9,13 +9,6 @@ export default class Reportscreen extends Component {
   constructor(props){
     super(props),
     this.state = ({sort: ""})
-  }
-
-  componentDidMount() {
-    // Handle focus, in case of back button hit
-    this.props.navigation.addListener("focus", () => {
-      console.log("Got focused");
-    });
   }
 
   render() {
