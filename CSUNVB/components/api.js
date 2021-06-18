@@ -29,6 +29,9 @@ class API {
     return connectAPI.post('novacheck', payload, config)
   }
 
+  postPharmaCheck(payload){
+    return connectAPI.post('pharmacheck', payload, config)
+  }
 
 }
 
