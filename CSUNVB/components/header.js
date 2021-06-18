@@ -13,7 +13,7 @@ class HeaderView extends Component {
             activeOpacity={0.95}
             style={styles.buttonGoBack}
             onPress={() => {
-              localStorage.setItem("nav", "Consult");
+              localStorage.setItem("nav", this.props.previous);
               localStorage.removeItem("actionId");
               this.props.nav.navigate(this.props.previous);
             }}

@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-} from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
+import { Card } from "react-native-elements";
 import Moment from "moment";
 
 import APIKit from "./Api";
@@ -16,58 +12,64 @@ class DataActionView extends Component {
   }
 
   getActionsData() {
-      APIKit.getReports()
-        .then((res) => {
-            const data = res.data;
-            Moment.locale("fr");
-            this.action = data.shift.map(u => 
-                {
-                    if(u.id == localStorage.getItem("actionId")){
-                        const actionShift = (
-                        <View key={u.id} style={{ marginBottom: 10 }}>
-                            <Text style={styles.textTitle}>Dans le rapport</Text>
-                            <Text style={styles.textTitle}>du {Moment(u.date).format("Y-MM-DD")}</Text>
-                            <Text style={styles.textTitle}>à {u.base}</Text>
-                        </View>
-                        
-                        )
-                        this.setState({
-                            actionData: actionShift
-                        })
-                    }
-                }
-            )
-        })
+    APIKit.getReports().
+    then((res) => {
+      const data = res.data;
+      Moment.locale("fr");
+      this.action = data.shift.map((u) => {
+        if (u.id == this.props.action) {
+          const actionShift = (
+            <View key={u.id} style={{ marginBottom: 10 }}>
+              <Text style={styles.textTitle}>Dans le rapport</Text>
+              <Text style={styles.textTitle}>
+                du {Moment(u.date).format("DD MMM Y")}
+              </Text>
+              <Text style={styles.textTitle}>à {u.base}</Text>
+            </View>
+          );
+          this.setState({
+            actionData: actionShift,
+          });
+        }
+      });
+    });
   }
-  
 
   getActionDetailsData() {
-    APIKit.getMyActionInShift(localStorage.getItem("actionId"))
+
+    APIKit.getMyActionInShift(this.props.action)
       .then((res) => {
         const data = res.data;
         Moment.locale("fr");
-        const actionInfo = data.data.map(u => (
-            <View key={u.id} style={styles.container}>
-                {   u.day == 0 ? (
-                    <Image
-                    style={styles.tinyLogo}
-                    source={require('./../assets/sun.png')}
+        const actionInfo = data.data.map((u) => (
+          <Card style={styles.cardContainer}  containerStyle={u.day == 0 ?  (styles.dayFont) :  (styles.nightFont)}>
+            <View style={styles.cardTitleArea}>
+              <View style={styles.cardTitle}>
+                <Text style={styles.text}>{u.action}</Text>
+              </View>
+              <View >
+                {u.day == 0 ? (
+                  <Image
+                    style={styles.cardLogo}
+                    source={require("./../assets/sun.png")}
                   />
                 ) : (
                   <Image
-                  style={styles.tinyLogo}
-                  source={require('./../assets/moon.png')}
-                />
+                    style={styles.cardLogo}
+                    source={require("./../assets/moon.png")}
+                  />
                 )}
-                <View style={styles.textAction}>
-                    <Text style={ styles.text}>{u.action}</Text>
-                    <Text style={styles.date}>{u.at}</Text>
-                </View>
+              </View>
+              
             </View>
+            <View style={styles.textAction}>
+              <Text style={styles.date}>{u.at}</Text>
+            </View>
+          </Card>
         ));
 
         this.setState({
-            actionInfo: actionInfo,
+          actionInfo: actionInfo,
         });
       })
       .catch((error) => {
@@ -91,53 +93,44 @@ class DataActionView extends Component {
 
 const styles = StyleSheet.create({
   textTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
   },
   text: {
     fontSize: 15,
     fontWeight: "bold",
-    textAlign: "left"
+    textAlign: "left",
   },
   textAction: {
-    textAlign: "left"
+    textAlign: "left",
   },
   date: {
-    fontSize: 9,
+    fontSize: 12,
   },
-
-  day: {
-    fontSize: 10,
-    fontWeight: "bold",
-    backgroundColor: "white",
-    marginRight: 5,
-    width: 10,
-    height: 20
-  },
-  night: {
-    fontSize: 10,
-    fontWeight: "bold",
-    backgroundColor: "black",
-    color: "white",
-    marginRight: 5,
-    width: 12,
-    height: 20
-  },
-
-
-
-  container: {
-    flexDirection: "row",
-    marginLeft: 5,
-    marginBottom: 15
-  },
-  dateContainer: {
-      justifyContent: 'flex-end'
-  },
-
-  tinyLogo: {
+  cardLogo: {
     width: 40,
     height: 40,
+  },
+  dayFont: {
+    backgroundColor: "#f4edc5"
+  },
+  nightFont: {
+    backgroundColor: "#69a0d045"
+  },
+
+
+  cardTitleArea: {
+    flexDirection: "row",
+
+  },
+  cardTitle: {
+    width: "90%"
+  },
+  cardContainer: {
+    flexDirection: "row",
+    marginLeft: 5,
+    marginBottom: 15,
+    width: "100%",
   },
 });
 

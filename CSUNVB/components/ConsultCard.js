@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
 } from "react-native";
 import Moment from "moment";
@@ -25,10 +24,9 @@ class ConsultationView extends Component {
             <TouchableOpacity
               activeOpacity={0.95}
               onPress={() => {
-                localStorage.setItem("nav", "Action");
-                //TODO Code moche à trouver comment faire ça correctement
-                localStorage.setItem("actionId",  u.id);
-                this.props.nav.navigate("Action" );
+                localStorage.setItem("actionId", u.id)
+                this.props.actionId(u.id)
+                this.props.nav.navigate("Action");
               }}
             >
               <Text style={{ textAlign: "left" }}>

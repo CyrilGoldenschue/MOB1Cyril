@@ -10,15 +10,17 @@ import DataAction from "../../components/ActionCard";
 export default class Actionscreen extends Component {
   constructor(props) {
     super(props),
-    (this.state = { actions: [], actionId: "" })
+    (this.state = { actions: [] })
   }
 
   render() {
+
+let action = this.props.action
     return (
       <View style={styles.container}>
         <Header nav={this.props.navigation} title="Mes actions" previous="Consult" />
         <View style={styles.page}>
-          <DataAction />
+          <DataAction action={action} />
         </View>
       </View>
     );
