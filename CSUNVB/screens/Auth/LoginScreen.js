@@ -8,6 +8,7 @@ import {
   Button,
   SafeAreaView,
 } from "react-native";
+import { showMessage } from "react-native-flash-message";
 import { Picker } from "@react-native-picker/picker";
 
 import PickerView from "../../components/Picker";
@@ -41,9 +42,18 @@ class LoginScreen extends Component {
 
     const onFailure = (error) => {
       console.log(error && error.response);
-      this.setState({ message: "The login or the password is wrong. " });
+      showMessage({
+        message: "The login or the password is wrong.",
+        type: "danger",
+        duration: 6000
+      });
     };
-    this.state.base == "" ? this.setState({ message: "The base aren't selected. " }) : APIKit.getToken(payload).then(onSuccess).catch(onFailure);
+    this.state.base == "" ? 
+    showMessage({
+      message: "The base aren't selected.",
+      type: "warning",
+      duration: 6000
+    }) : APIKit.getToken(payload).then(onSuccess).catch(onFailure);
   }
   
   render() {
