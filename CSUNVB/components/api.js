@@ -16,6 +16,9 @@ class API {
     return connectAPI.get("bases", {});
   }
 
+  getToken(payload) {
+    return connectAPI.post("gettoken", payload)
+  }
 }
 
 const APIKit = new API();

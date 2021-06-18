@@ -43,7 +43,7 @@ class LoginScreen extends Component {
       console.log(error && error.response);
       this.setState({ message: "The login or the password is wrong. " });
     };
-    this.state.base == "" ? this.setState({ message: "The base aren't selected. " }) : APIKit.post("gettoken", payload).then(onSuccess).catch(onFailure);
+    this.state.base == "" ? this.setState({ message: "The base aren't selected. " }) : APIKit.getToken(payload).then(onSuccess).catch(onFailure);
   }
   
   render() {
