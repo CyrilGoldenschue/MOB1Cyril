@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  Image,
 } from "react-native";
 import Moment from "moment";
 
@@ -46,13 +46,18 @@ class DataActionView extends Component {
       .then((res) => {
         const data = res.data;
         Moment.locale("fr");
-        console.log(data)
         const actionInfo = data.data.map(u => (
             <View key={u.id} style={styles.container}>
                 {   u.day == 0 ? (
-                    <Text style={ styles.day}>J</Text>
+                    <Image
+                    style={styles.tinyLogo}
+                    source={require('@expo/../../assets/sun.png')}
+                  />
                 ) : (
-                    <Text style={ styles.night}>N</Text>
+                  <Image
+                  style={styles.tinyLogo}
+                  source={require('@expo/../../assets/moon.png')}
+                />
                 )}
                 <View style={styles.textAction}>
                     <Text style={ styles.text}>{u.action}</Text>
@@ -128,7 +133,12 @@ const styles = StyleSheet.create({
   },
   dateContainer: {
       justifyContent: 'flex-end'
-  }
+  },
+
+  tinyLogo: {
+    width: 40,
+    height: 40,
+  },
 });
 
 export default DataActionView;
