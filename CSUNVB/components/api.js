@@ -32,6 +32,10 @@ class API {
     return connectAPI.get("reports/", config)
   }
 
+  getMyActionInShift(actionId){
+    return connectAPI.get("myactionsinshift/"+actionId, config)
+  }
+
   postNovaCheck(payload){
     return connectAPI.post('novacheck', payload, config)
   }

@@ -16,13 +16,7 @@ class DataActionView extends Component {
   }
 
   getActionsData() {
-        
-    let config = {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("user_token"),
-        },
-      };
-      APIKit.get("reports/", config)
+      APIKit.getReports()
         .then((res) => {
             const data = res.data;
             Moment.locale("fr");
@@ -48,12 +42,7 @@ class DataActionView extends Component {
   
 
   getActionDetailsData() {
-    let config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("user_token"),
-      },
-    };
-    APIKit.get("myactionsinshift/"+localStorage.getItem("actionId"), config)
+    APIKit.getMyActionInShift(localStorage.getItem("actionId"))
       .then((res) => {
         const data = res.data;
         Moment.locale("fr");
