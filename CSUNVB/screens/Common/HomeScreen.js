@@ -11,7 +11,7 @@ export default class Homescreen extends Component {
   
   getBasesData() {
         
-    APIKit.get('bases', {})
+    APIKit.getBases()
         .then(res => {
             const dataBase = res.data
             this.base = dataBase.map(u =>
@@ -31,12 +31,8 @@ export default class Homescreen extends Component {
   }
 
   getUserData() {
-        let config = {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem("user_token")
-          }
-        }
-    APIKit.get('user', config)
+        
+      APIKit.getUser()
         .then(res => {
             const dataUser = res.data
             this.setState({
@@ -61,7 +57,7 @@ export default class Homescreen extends Component {
         <ImageBackground source={image} style={styles.image}>
         <View>
             <TouchableOpacity 
-              activeOpacity={0.95} 
+              activeOpacity={0.80} 
               style={styles.buttonMenu} 
               onPress={() => {
                 localStorage.setItem('nav', "Consult");
@@ -73,7 +69,7 @@ export default class Homescreen extends Component {
           </View>
         <View>
             <TouchableOpacity 
-              activeOpacity={0.95} 
+              activeOpacity={0.80} 
               style={styles.buttonMenu} 
               onPress={() => {
                 localStorage.setItem('nav', "Report");

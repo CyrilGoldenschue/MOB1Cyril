@@ -19,6 +19,10 @@ class API {
   getToken(payload) {
     return connectAPI.post("gettoken", payload)
   }
+
+  getUser(){
+    return connectAPI.get('user', config)
+  }
 }
 
 const APIKit = new API();
