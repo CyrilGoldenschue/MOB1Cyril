@@ -15,64 +15,7 @@ class ConsultationView extends Component {
     super(props);
     this.state = { reportsGarde: [], reportsStup: [] };
   }
-
-  onSendReport(data) {
-    const onSuccess = ({ data }) => {
-      this.getReportsData();
-    };
-
-    const onFailure = (error) => {
-      console.log(error && error.response);
-    };
-
-    let config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("user_token"),
-      },
-    };
-    if (this.props.sort == "pharma") {
-      const { batch_id, drugsheet_id, date, start, end } = data;
-      const payload = { batch_id, drugsheet_id, date, start, end };
-
-      payload.start =
-        this.state.myNumber1 != ""
-          ? this.state.myNumber1
-          : data.start == null
-          ? onFailure
-          : data.start.toString();
-      payload.end =
-        this.state.myNumber2 != ""
-          ? this.state.myNumber2
-          : data.end == null
-          ? onFailure
-          : data.end.toString();
-
-      APIKit.post("pharmacheck", payload, config)
-        .then(onSuccess)
-        .catch(onFailure);
-    } else if (this.props.sort == "nova") {
-      const { nova_id, drug_id, drugsheet_id, date, start, end } = data;
-      const payload = { nova_id, drug_id, drugsheet_id, date, start, end };
-
-      payload.start =
-        this.state.myNumber1 != ""
-          ? this.state.myNumber1
-          : data.start.toString();
-      payload.end =
-        this.state.myNumber2 != "" ? this.state.myNumber2 : data.end.toString();
-
-      APIKit.post("novacheck", payload, config)
-        .then(onSuccess)
-        .catch(onFailure);
-    }
-  }
-
   getReportsData() {
-    let config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("user_token"),
-      },
-    };
     APIKit.getReports()
       .then((res) => {
         const data = res.data;
