@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-import ConsultationView from "../../components/consult";
+import ConsultationView from "../../components/consultData";
 
 let textBack = "<";
 
 export default class Reportscreen extends Component {
   constructor(props) {
     super(props), (this.state = { sort: "" });
-  }
-
-  componentDidMount() {
-    // Handle focus, in case of back button hit
-    this.props.navigation.addListener("focus", () => {
-      //console.log("Got focused");
-    });
   }
 
   render() {

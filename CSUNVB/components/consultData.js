@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Moment from "moment";
 
-import APIKit from "../components/api";
+import APIKit from "./api";
 
 class ConsultationView extends Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class ConsultationView extends Component {
         Authorization: "Bearer " + localStorage.getItem("user_token"),
       },
     };
-    APIKit.get("reports/", config)
+    APIKit.getReports()
       .then((res) => {
         const data = res.data;
         Moment.locale("fr");
