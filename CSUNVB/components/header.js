@@ -5,7 +5,6 @@ class HeaderView extends Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     return (
       <>
@@ -24,6 +23,7 @@ class HeaderView extends Component {
               source={require("@expo/../../assets/arrowLeft.png")}
             />
           </TouchableOpacity>
+          
           <Text style={styles.title}>{this.props.title}</Text>
         </View>
       </>
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 45,
-    marginLeft: "5%",
     fontWeight: "bold",
+    width: "100%"
   },
   buttonGoBack: {
     width: 50,

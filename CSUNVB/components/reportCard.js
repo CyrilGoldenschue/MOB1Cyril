@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import Moment from 'moment';
+import { showMessage } from "react-native-flash-message";
 
 import APIKit from "./api"
 
@@ -13,40 +14,47 @@ class ReportsView extends Component {
 
     onChangedStartValue(text){
         let newText = '';
-        let numbers = '0123456789';
 
         for (var i=0; i < text.length; i++) {
-            text = text.replace(/[^0-9]/g, '')
-            if(numbers.indexOf(text[i]) > -1 ) {
-                newText = newText + text[i];
-                this.setState({ startNumber: newText});
-            }
+            newText = newText + text[i]
+            this.setState({ startNumber: newText})
         }
         
     }
 
     onChangedEndValue(text){
         let newText = '';
-        let numbers = '0123456789';
     
         for (var i=0; i < text.length; i++) {
-            text = text.replace(/[^0-9]/g, '')
-            if(numbers.indexOf(text[i]) > -1 ) {
-                newText = newText + text[i];
-                this.setState({ endNumber: newText});
-            }
+            newText = newText + text[i]
+            this.setState({ endNumber: newText})
         }
     }
 
     onSendReport(data){
 
         const onSuccess = () => {
-            alert("c'est noté")
             this.getReportsData()
+            showMessage({
+                message: "Rapport enregisté !",
+                type: "success",
+                duration: 6000
+              });
+              this.setState({ startNumber: "", endNumber: ""})
         };
     
         const onFailure = error => {
-            alert("les valeurs inscrites ne sont pas valable merci de mettre des nombres")
+            this.state.endNumber != "" || this.state.startNumber != "" ?
+            showMessage({
+                message: "les valeurs inscrites ne sont pas valable merci de mettre des nombres.",
+                type: "danger",
+                duration: 6000
+              }) :
+              showMessage({
+                message: "Vous ne pouvez pas envoyé ce rapport sans des informations valables.",
+                type: "warning",
+                duration: 6000
+              })
             console.log(error && error.response);
         };
 
@@ -67,8 +75,8 @@ class ReportsView extends Component {
             const payload = {nova_id, drug_id, drugsheet_id, date, start, end}
 
             
-            payload.start = this.state.startNumber != "" ? this.state.startNumber : (data.start).toString()
-            payload.end = this.state.endNumber != "" ? this.state.endNumber : (data.end).toString()
+            payload.start = this.state.startNumber != "" ? this.state.startNumber : data.start == null ? onFailure : (data.start).toString()
+            payload.end = this.state.endNumber != "" ? this.state.endNumber :  data.end == null ? onFailure : (data.end).toString()
             
 
            APIKit.postNovaCheck(payload)

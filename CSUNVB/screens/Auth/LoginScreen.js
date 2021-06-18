@@ -43,14 +43,14 @@ class LoginScreen extends Component {
     const onFailure = (error) => {
       console.log(error && error.response);
       showMessage({
-        message: "The login or the password is wrong.",
+        message: "Les initiales ou le mot de passe est incorrect.",
         type: "danger",
         duration: 6000
       });
     };
     this.state.base == "" ? 
     showMessage({
-      message: "The base aren't selected.",
+      message: "aucune base n'a été sélectionnée.",
       type: "warning",
       duration: 6000
     }) : APIKit.getToken(payload).then(onSuccess).catch(onFailure);
