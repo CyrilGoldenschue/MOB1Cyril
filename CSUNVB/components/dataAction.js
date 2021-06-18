@@ -51,12 +51,12 @@ class DataActionView extends Component {
                 {   u.day == 0 ? (
                     <Image
                     style={styles.tinyLogo}
-                    source={require('@expo/../../assets/sun.png')}
+                    source={require('./../assets/sun.png')}
                   />
                 ) : (
                   <Image
                   style={styles.tinyLogo}
-                  source={require('@expo/../../assets/moon.png')}
+                  source={require('./../assets/moon.png')}
                 />
                 )}
                 <View style={styles.textAction}>

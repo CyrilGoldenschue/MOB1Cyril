@@ -20,7 +20,7 @@ class HeaderView extends Component {
           >
             <Image
               style={styles.tinyLogo}
-              source={require("@expo/../../assets/arrowLeft.png")}
+              source={require("./../assets/arrowLeft.png")}
             />
           </TouchableOpacity>
           
