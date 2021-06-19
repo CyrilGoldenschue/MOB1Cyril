@@ -56,9 +56,11 @@ class ConsultationView extends Component {
         const reportsStup = data.drug.map((u) => (
           <Card style={styles.cardContainer}>
             <View key={u.id} style={{ marginBottom: 10 }}>
-              <Text style={{ textAlign: "left" }}>
+            <View  style={styles.cardTitle} >
+                <Text>
                 Semaine {u.week} à {u.base}
               </Text>
+              </View>
             </View>
           </Card>
         ));
