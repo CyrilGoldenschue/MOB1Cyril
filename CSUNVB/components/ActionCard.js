@@ -13,14 +13,12 @@ class DataActionView extends Component {
   }
 
   getActionsData() {
-    let oneTime = true
     APIKit.getReports().
       then((res) => {
         const data = res.data;
         Moment.locale("fr");
         this.action = data.shift.map((u) => {
           if (u.id == this.props.action) {
-            oneTime = false
             const actionShift = (
               <View key={u.id} style={{ marginBottom: 10 }}>
                 <Text style={styles.textTitle}>Dans le rapport</Text>
@@ -33,14 +31,6 @@ class DataActionView extends Component {
             this.setState({
               actionData: actionShift,
             });
-          } else if (oneTime) {
-
-            oneTime = false
-            showMessage({
-              message: "Il n'y a pas d'action pour cette garde.",
-              type: "warning",
-              duration: 6000
-            })
           }
         });
       });
@@ -77,8 +67,17 @@ class DataActionView extends Component {
               <Text style={styles.date}>{u.at}</Text>
             </View>
           </Card>
+
+
         ));
 
+        if (data.data.length == 0) {
+          showMessage({
+            message: "Il n'y a pas d'action pour cette garde.",
+            type: "warning",
+            duration: 6000
+          })
+        }
         this.setState({
           actionInfo: actionInfo,
         });
