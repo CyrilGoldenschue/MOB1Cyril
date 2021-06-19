@@ -37,7 +37,7 @@ export default class Reportscreen extends Component {
               <Text style={styles.text}>Stup</Text>
             </TouchableOpacity>
           </View>
-          <View style={{marginLeft: 20, marginTop: 20}}>
+          <View style={{marginTop: 20}}>
           <ConsultationView nav={this.props.navigation} actionId={this.props.actionId} sort={this.state.sort} />
           </View>
         </View>
