@@ -10,12 +10,11 @@ import DataAction from "../../components/ActionCard";
 export default class Actionscreen extends Component {
   constructor(props) {
     super(props),
-    (this.state = { actions: [] })
+      (this.state = { actions: [] })
   }
 
   render() {
-// TODO Ajouter un showMessage quand il n'y a pas d'affichage
-let action = this.props.action
+    let action = this.props.action
     return (
       <View style={styles.container}>
         <Header nav={this.props.navigation} title="Mes actions" previous="Consult" />

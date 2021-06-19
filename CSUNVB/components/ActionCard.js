@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { Card } from "react-native-elements";
 import Moment from "moment";
+import { showMessage } from "react-native-flash-message";
 
 import APIKit from "./Api";
 
@@ -12,27 +13,37 @@ class DataActionView extends Component {
   }
 
   getActionsData() {
+    let oneTime = true
     APIKit.getReports().
-    then((res) => {
-      const data = res.data;
-      Moment.locale("fr");
-      this.action = data.shift.map((u) => {
-        if (u.id == this.props.action) {
-          const actionShift = (
-            <View key={u.id} style={{ marginBottom: 10 }}>
-              <Text style={styles.textTitle}>Dans le rapport</Text>
-              <Text style={styles.textTitle}>
-                du {Moment(u.date).format("DD MMM Y")}
-              </Text>
-              <Text style={styles.textTitle}>à {u.base}</Text>
-            </View>
-          );
-          this.setState({
-            actionData: actionShift,
-          });
-        }
+      then((res) => {
+        const data = res.data;
+        Moment.locale("fr");
+        this.action = data.shift.map((u) => {
+          if (u.id == this.props.action) {
+            oneTime = false
+            const actionShift = (
+              <View key={u.id} style={{ marginBottom: 10 }}>
+                <Text style={styles.textTitle}>Dans le rapport</Text>
+                <Text style={styles.textTitle}>
+                  du {Moment(u.date).format("DD MMM Y")}
+                </Text>
+                <Text style={styles.textTitle}>à {u.base}</Text>
+              </View>
+            );
+            this.setState({
+              actionData: actionShift,
+            });
+          } else if (oneTime) {
+
+            oneTime = false
+            showMessage({
+              message: "Il n'y a pas d'action pour cette garde.",
+              type: "warning",
+              duration: 6000
+            })
+          }
+        });
       });
-    });
   }
 
   getActionDetailsData() {
@@ -42,7 +53,7 @@ class DataActionView extends Component {
         const data = res.data;
         Moment.locale("fr");
         const actionInfo = data.data.map((u) => (
-          <Card style={styles.cardContainer}  containerStyle={u.day == 0 ?  (styles.dayFont) :  (styles.nightFont)}>
+          <Card style={styles.cardContainer} containerStyle={u.day == 0 ? (styles.dayFont) : (styles.nightFont)}>
             <View style={styles.cardTitleArea}>
               <View style={styles.cardTitle}>
                 <Text style={styles.text}>{u.action}</Text>
@@ -60,7 +71,7 @@ class DataActionView extends Component {
                   />
                 )}
               </View>
-              
+
             </View>
             <View style={styles.textAction}>
               <Text style={styles.date}>{u.at}</Text>
