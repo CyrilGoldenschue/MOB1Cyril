@@ -96,7 +96,6 @@ class ReportsView extends Component {
                 const data = res.data
                 Moment.locale("fr")
                 const reportsPharma = data.pharma.map(u =>
-
                     <Card style={styles.cardContainer} containerStyle={styles.back}>
                         <View key={Math.random().toString(36).substr(2, 9)}>
                             <Text style={styles.title}>Du lot {u.batch_number} de  {u.drug}</Text>
@@ -147,40 +146,51 @@ class ReportsView extends Component {
                 })
 
                 const reportsNova = data.nova.map(u =>
-                    <Card style={styles.cardContainer}>
-                        <View style={styles.back} key={Math.random().toString(36).substr(2, 9)}>
-                            <Text style={styles.titleReport}>Du {u.drug} de la nova {u.nova} </Text>
+                    <Card style={styles.cardContainer} containerStyle={styles.back}>
+                        <View key={Math.random().toString(36).substr(2, 9)}>
+                            <Text style={styles.title}>Du {u.drug} de la nova {u.nova} </Text>
                             <Text>Pour le {Moment(u.date).format("D MMM")}</Text>
-                            <View style={styles.quantity}>
-                                <Text style={styles.titleReport}>Matin :</Text>
-                                <TextInput
-                                    style={styles.numberInput}
-                                    keyboardType='numeric'
-                                    onChangeText={(text) => this.onChangedStartValue(text)}
-                                    defaultValue={u.start}
-                                    maxLength={2}
-                                />
+                            <View style={styles.quantityContainer}>
+                                <View>
+                                    <View style={styles.quantity}>
+                                        <Text style={styles.titleReport}>Matin :</Text>
+                                        <TextInput
+                                            style={styles.numberInput}
+                                            keyboardType='numeric'
+                                            onChangeText={(text) => this.onChangedStartValue(text)}
+                                            defaultValue={u.start}
+                                            maxLength={2}
+                                        />
 
-                                <Text style={styles.titleReport}>Soir : {u.end}</Text>
-                                <TextInput
-                                    style={styles.numberInput}
-                                    keyboardType='numeric'
-                                    onChangeText={(text) => this.onChangedEndValue(text)}
-                                    defaultValue={u.end}
-                                    maxLength={2}
-                                />
-                                <TouchableOpacity
-                                    activeOpacity={0.95}
-                                    style={styles.buttonSend}
-                                    onPress={() => {
-                                        this.setState({ sort: "pharma" })
-                                        this.onSendReport(u)
-                                    }}>
-                                    <Text style={styles.text}>Envoyer</Text>
-                                </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.quantity}>
+                                        <Text style={styles.titleReport}>Soir : {u.end}</Text>
+                                        <TextInput
+                                            style={styles.numberInput}
+                                            keyboardType='numeric'
+                                            onChangeText={(text) => this.onChangedEndValue(text)}
+                                            defaultValue={u.end}
+                                            maxLength={2}
+                                        />
+                                    </View>
+                                    <View style={styles.buttonSendArea}>
+                                        <TouchableOpacity
+                                            activeOpacity={0.95}
+                                            style={styles.buttonSend}
+                                            onPress={() => {
+                                                this.setState({ sort: "pharma" })
+                                                this.onSendReport(u)
+                                            }}>
+                                            <Text style={styles.text}>Envoyer</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+
                             </View>
                         </View>
                     </Card>
+
+
 
                 )
 
@@ -217,7 +227,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         borderColor: 'gray',
-        backgroundColor: "#a4a6a8",
+        backgroundColor: "#c8c9cc",
         paddingBottom: 10,
         paddingTop: 10,
     },
@@ -244,11 +254,16 @@ const styles = StyleSheet.create({
     buttonSend: {
         paddingLeft: 5,
         paddingRight: 5,
-        paddingTop: 2,
-        paddingBottom: 2,
-        backgroundColor: '#c8c9cc',
+        height: 30,
+        backgroundColor: '#a4a6a8',
+        borderWidth:1,
+        borderColor: "black"
 
     },
+    text: {
+        fontSize: 16,
+        fontWeight: "bold"
+    },  
     buttonSendArea: {
         marginTop: 20
 
