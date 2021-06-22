@@ -33,9 +33,15 @@ class DataActionView extends Component {
       .then((res) => {
         const dataWorkPlan = res.data;
         const workplanData = (
+          dataWorkPlan.length != 0 ?(
           <Text style={styles.textWorkplan}>
             Il reste {dataWorkPlan.length} horaires à remplir
           </Text>
+          ) : (
+            <Text style={styles.textWorkplan}>
+            Vous avez confirmé tous vos horaires
+          </Text>
+          )
         );
         this.setState({
           workplanData: workplanData,
@@ -50,7 +56,8 @@ class DataActionView extends Component {
   onSendWorkplan(data, status) {
 
     const onSuccess = () => {
-        this.getWorkPlanData()
+      this.getWorkPlanData()
+      this.countWorkPlanData()
         showMessage({
             message: "horaire confirmé !",
             type: "success",
@@ -77,8 +84,6 @@ class DataActionView extends Component {
           payload.reason = this.state.reason != null ? this.state.reason : "")
         : ""
         payload.confirmation = status
-
-          console.log(payload)
 
         APIKit.postConfirmWorkPlan(payload)
             .then(onSuccess)
