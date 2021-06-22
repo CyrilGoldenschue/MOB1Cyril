@@ -95,7 +95,7 @@ class LoginScreen extends Component {
               />
             </View>
           </SafeAreaView>
-          <Text style={{color: "red", fontWeight: "bold"}}> {this.state.message} </Text>
+          <Text style={{fontWeight: "bold"}}>Version: eval CGE</Text>
         </ImageBackground>
       </View>
     );
