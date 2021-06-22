@@ -9,6 +9,7 @@ import ReportScreen from "../screens/Common/ReportScreen";
 import ConsultScreen from "../screens/Common/ConsultScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import ActionScreen from "../screens/Common/ActionScreen";
+import WorkplanScreen from "../screens/Common/WorkplanScreen";
 
 const Stack = createStackNavigator();
 
@@ -87,6 +88,14 @@ class Navigation extends Component {
               }}
             >
               {(props) => <ActionScreen {...props} action={this.state.action} actionId={this.handleActionUpdate} />}
+            </Stack.Screen>
+            <Stack.Screen
+              name="Workplan"
+              options={{
+                headerShown: false,
+              }}
+            >
+              {(props) => <WorkplanScreen {...props} />}
             </Stack.Screen>
           </Stack.Navigator>
         </>
