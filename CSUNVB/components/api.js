@@ -36,6 +36,15 @@ class API {
     return connectAPI.get("myactionsinshift/"+actionId, config)
   }
 
+  getUnconfirmedWorkPlan(){
+    return connectAPI.get('unconfirmedworkplans', config)
+  }
+
+
+  postConfirmWorkPlan(payload){
+    return connectAPI.post('confirmworkplan', payload, config)
+  }
+
   postNovaCheck(payload){
     return connectAPI.post('novacheck', payload, config)
   }
