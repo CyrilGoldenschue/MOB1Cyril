@@ -16,9 +16,8 @@ import APIKit from "./Api";
 class DataActionView extends Component {
   constructor(props) {
     super(props);
-    this.state = { workplanInfo: [], reason: "" };
+    this.state = { workplanData: "", workplanInfo: [], reason: null };
   }
-  // TODO essayer si j'ai le temps de faire apparaitre le nom de la base
 
   onChangedReasonValue(text) {
     let newText = "";
@@ -29,7 +28,64 @@ class DataActionView extends Component {
     }
   }
 
-  
+  countWorkPlanData() {
+    APIKit.getUnconfirmedWorkPlan()
+      .then((res) => {
+        const dataWorkPlan = res.data;
+        const workplanData = (
+          <Text style={styles.textWorkplan}>
+            Il reste {dataWorkPlan.length} horaires à remplir
+          </Text>
+        );
+        this.setState({
+          workplanData: workplanData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+
+  onSendWorkplan(data, status) {
+
+    const onSuccess = () => {
+        this.getWorkPlanData()
+        showMessage({
+            message: "horaire confirmé !",
+            type: "success",
+            duration: 6000
+        });
+        this.setState({isSpeak: false})
+    };
+
+    const onFailure = error => {
+      //TODO voir si j'ai le temps de faire les exeption
+        /*this.state.reason.length <= 10 || this.state.reason.length >= 50 ?
+            showMessage({
+                message: "La raison a trop de caractère ou pas assez.",
+                type: "danger",
+                duration: 6000
+            }) : ""*/
+        console.log(error && error.response);
+    };
+
+        const { id, confirmation, reason } = data
+        const payload = { id, confirmation, reason }
+
+        status != 1 ? (
+          payload.reason = this.state.reason != null ? this.state.reason : "")
+        : ""
+        payload.confirmation = status
+
+          console.log(payload)
+
+        APIKit.postConfirmWorkPlan(payload)
+            .then(onSuccess)
+            .catch(onFailure);
+
+}
+
 
 
   getWorkPlanData() {
@@ -37,7 +93,6 @@ class DataActionView extends Component {
       .then((res) => {
         const dataWorkPlan = res.data;
         Moment.locale("fr");
-        console.log(dataWorkPlan);
         const workplanInfo = dataWorkPlan.map((u) => (
           <Card
             key={u.id}
@@ -51,7 +106,7 @@ class DataActionView extends Component {
                 <Text style={styles.text}>
                   Horaire de type : {u.worktime.type}
                 </Text>
-                {u.confirmation == 0 ? (
+                
                   <View style={styles.reasonArea}>
                     <Text style={styles.text}>raison : </Text>
                     <TextInput
@@ -60,12 +115,10 @@ class DataActionView extends Component {
                       defaultValue={u.reason}
                       multiline={true}
                       numberOfLines={4}
-                      minLength={4}
+                      maxLength={50}
                     ></TextInput>
                   </View>
-                ) : (
-                  ""
-                )}
+              
                 <Text style={styles.text}>
                   pour le {Moment(u.date).format("DD MMMM Y")}
                 </Text>
@@ -89,8 +142,7 @@ class DataActionView extends Component {
                 activeOpacity={0.95}
                 style={styles.buttonSend}
                 onPress={() => {
-                  this.setState({ status: 1 });
-                  this.onSendReport(u);
+                  this.onSendWorkplan(u, 1);
                 }}
               >
                 <Text style={styles.textButton}>Confirmer</Text>
@@ -100,8 +152,7 @@ class DataActionView extends Component {
                 activeOpacity={0.95}
                 style={styles.buttonSend}
                 onPress={() => {
-                  this.setState({ status: 0 });
-                  this.onSendReport(u);
+                  this.onSendWorkplan(u, 0);
                 }}
               >
                 <Text style={styles.textButton}>A discuter</Text>
@@ -119,12 +170,14 @@ class DataActionView extends Component {
   }
 
   componentDidMount() {
-    this.getWorkPlanData();
+    this.getWorkPlanData(); 
+    this.countWorkPlanData();
   }
 
   render() {
     return (
       <>
+        {this.state.workplanData}
         {this.state.workplanInfo}
       </>
     );
@@ -204,6 +257,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(33, 150, 243)",
     width: 150,
     height: 30,
+  },
+  
+  textWorkplan: {
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
 

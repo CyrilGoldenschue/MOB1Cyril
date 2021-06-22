@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
+  Text
 } from "react-native";
 
 import Header from "../../components/Header";
 import DataWorkplay from "../../components/WorkplanCard";
+import APIKit from "../../components/Api";
 
 export default class Actionscreen extends Component {
   constructor(props) {
-    super(props),
-      (this.state = { actions: [] })
+    super(props)
   }
 
   render() {
