@@ -102,8 +102,8 @@ export default class Homescreen extends Component {
               activeOpacity={0.8}
               style={styles.buttonMenuSmall}
               onPress={() => {
-                localStorage.setItem("nav", "Report");
-                this.props.navigation.navigate("Report");
+                localStorage.setItem("nav", "Workplan");
+                this.props.navigation.navigate("Workplan");
               }}
             >
               <Text style={styles.textMenu}>Horaires à confirmer</Text>
